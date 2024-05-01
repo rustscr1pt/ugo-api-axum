@@ -2,6 +2,7 @@ use std::sync::Arc;
 use axum::{Extension, Router};
 use axum::routing::post;
 use tokio::sync::{Mutex, RwLock};
+use crate::axum_routes::get_orders_by_page::get_orders_by_page::get_orders_by_page;
 use crate::axum_routes::write_route::write_route::write_route;
 use crate::mysql::admins_filler::async_admins_filler::admins_filler;
 use crate::mysql::establish_connection::establish_connection;
@@ -25,6 +26,8 @@ async fn main() {
 
     let app = Router::new()
         .route("/data/write", post(write_route))
+            .layer(Extension(Arc::clone(&arc_sql)))
+        .route("/api/orders/get/page", post(get_orders_by_page))
             .layer(Extension(Arc::clone(&arc_sql)));
 
     let addr = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
