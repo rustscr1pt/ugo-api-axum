@@ -2,6 +2,7 @@ use std::sync::Arc;
 use axum::{Extension, Router};
 use axum::routing::post;
 use tokio::sync::{Mutex, RwLock};
+use crate::axum_routes::routes::admin_management_routes::change_status_by_id::change_status_by_id::change_status_by_id;
 use crate::axum_routes::routes::admin_management_routes::get_filtered_orders_by_page::get_filtered_orders_by_page::get_filtered_orders_by_page;
 use crate::axum_routes::routes::admin_management_routes::get_orders_by_page::get_orders_by_page::get_orders_by_page;
 use crate::axum_routes::routes::admin_management_routes::write_route::write_route::write_route;
@@ -31,6 +32,8 @@ async fn main() {
         .route("/api/orders/get/page", post(get_orders_by_page))
             .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/orders/page/filtered", post(get_filtered_orders_by_page))
+            .layer(Extension(Arc::clone(&arc_sql)))
+        .route("/api/orders/change_status", post(change_status_by_id))
             .layer(Extension(Arc::clone(&arc_sql)));
 
     let addr = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
