@@ -1,4 +1,5 @@
 use std::sync::Arc;
+use axum::{Extension, Json};
 use axum::response::IntoResponse;
 use mysql::PooledConn;
 use tokio::sync::Mutex;
@@ -6,7 +7,7 @@ use crate::axum_routes::generic_replies::generic_replies::reply_with_serialized_
 use crate::axum_routes::routes::admin_management_routes::remove_note_from_order::remove_note_from_order_sql::remove_note_from_order_sql;
 use crate::axum_routes::routes::admin_management_routes::remove_note_from_order::remove_note_from_order_structs::RemoveNoteBody;
 
-pub async fn remove_note_from_order(body : RemoveNoteBody, pool : Arc<Mutex<PooledConn>>) -> impl IntoResponse {
+pub async fn remove_note_from_order(pool : Extension<Arc<Mutex<PooledConn>>>, Json(body) : Json<RemoveNoteBody>) -> impl IntoResponse {
     match body.note_id.parse::<u16>() {
         Ok(note_id) => {
             match body.related_id.parse::<u16>() {

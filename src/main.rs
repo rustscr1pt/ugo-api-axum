@@ -7,6 +7,7 @@ use crate::axum_routes::routes::admin_management_routes::change_status_by_id::ch
 use crate::axum_routes::routes::admin_management_routes::get_filtered_orders_by_page::get_filtered_orders_by_page::get_filtered_orders_by_page;
 use crate::axum_routes::routes::admin_management_routes::get_orders_by_page::get_orders_by_page::get_orders_by_page;
 use crate::axum_routes::routes::admin_management_routes::remove_note_from_order::remove_note_from_order::remove_note_from_order;
+use crate::axum_routes::routes::admin_management_routes::remove_order_from_orders::remove_order_from_orders::remove_order_from_orders;
 use crate::axum_routes::routes::admin_management_routes::write_route::write_route::write_route;
 use crate::mysql::admins_filler::async_admins_filler::admins_filler;
 use crate::mysql::establish_connection::establish_connection;
@@ -40,6 +41,8 @@ async fn main() {
         .route("/api/orders/add_note", post(add_note_to_order))
             .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/orders/remove_note", post(remove_note_from_order))
+            .layer(Extension(Arc::clone(&arc_sql)))
+        .route("/api/orders/remove_order", post(remove_order_from_orders))
             .layer(Extension(Arc::clone(&arc_sql)));
 
     let addr = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
