@@ -11,7 +11,7 @@ pub struct AdminsData { // Represents the admin which is added in the admins sta
 #[derive(Debug, Clone)]
 pub struct Token {
     pub token : String,
-    pub time_remaining : u32
+    pub time_remaining : u16
 }
 
 #[derive(Debug, Serialize)]

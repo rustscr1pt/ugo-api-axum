@@ -41,3 +41,7 @@ pub fn collect_group_notes(unlocked : &mut MutexGuard<PooledConn>, object : &Bas
 pub fn release_empty_vec() -> Vec<EmptyStruct> {
     return vec![]
 }
+
+pub fn release_string_uuid() -> String { // Release a UUID string for placing in React
+    return String::from(uuid::Uuid::new_v4())
+}
