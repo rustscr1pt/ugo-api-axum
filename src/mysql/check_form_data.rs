@@ -1,4 +1,4 @@
-use crate::axum_routes::write_route::write_route_structs::WriteDataBody;
+use crate::axum_routes::routes::admin_management_routes::write_route::write_route_structs::WriteDataBody;
 use crate::structs::enums::CheckFieldsCase;
 
 pub fn check_before_sending(body : &WriteDataBody) -> CheckFieldsCase {

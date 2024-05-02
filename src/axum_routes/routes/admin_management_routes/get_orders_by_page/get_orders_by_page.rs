@@ -4,9 +4,9 @@ use axum::response::IntoResponse;
 use mysql::PooledConn;
 use tokio::sync::Mutex;
 use crate::axum_routes::generic_replies::generic_replies::reply_with_serialized_struct;
-use crate::axum_routes::get_orders_by_page::get_orders_by_page_sql::get_orders_by_page_sql;
-use crate::axum_routes::get_orders_by_page::get_orders_by_page_structs::PageRequest;
-use crate::axum_routes::get_orders_by_page::total_rows_in_orders_sql::total_rows_in_orders_sql;
+use crate::axum_routes::routes::admin_management_routes::get_orders_by_page::get_orders_by_page_sql::get_orders_by_page_sql;
+use crate::axum_routes::routes::admin_management_routes::get_orders_by_page::get_orders_by_page_structs::PageRequest;
+use crate::axum_routes::routes::admin_management_routes::get_orders_by_page::total_rows_in_orders_sql::total_rows_in_orders_sql;
 use crate::structs::tool_functions::{extract_u16};
 
 pub async fn get_orders_by_page(pool : Extension<Arc<Mutex<PooledConn>>>, Json(body) : Json<PageRequest>) -> impl IntoResponse {
