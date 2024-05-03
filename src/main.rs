@@ -2,6 +2,7 @@ use std::sync::Arc;
 use axum::{Extension, Router};
 use axum::routing::post;
 use tokio::sync::{Mutex, RwLock};
+use crate::axum_routes::generic_replies::generic_replies::reject_unmatched_connection;
 use crate::axum_routes::routes::admin_management_routes::add_admin_account::add_admin_account::add_admin_account;
 use crate::axum_routes::routes::admin_management_routes::add_admin_account::add_admin_account_extension_builder::AddAdminAccountExtensionBuilder;
 use crate::axum_routes::routes::admin_management_routes::fetch_admins_data::fetch_admins_data::fetch_admins_data;
@@ -73,7 +74,8 @@ async fn main() {
             .layer(Extension(AddAdminAccountExtensionBuilder {
                 db_pool: Arc::clone(&arc_sql),
                 token_pool: Arc::clone(&tokens_pool),
-            }));
+            }))
+        .fallback(reject_unmatched_connection);
 
     let addr = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
     println!("Running on http://localhost:8000");

@@ -11,6 +11,17 @@ pub fn release_headers_for_reply() -> HeaderMap {
     return headers
 }
 
+// Reject any connections that don't match filters.
+pub fn reject_unmatched_connection() -> (HeaderMap, Json<Message>) {
+    return (
+            release_headers_for_reply(),
+            Json(Message {
+                is_succeed: false,
+                message: "This request is forbidden, your connection is dropped".to_string(),
+            })
+        )
+}
+
 // Standard reply to customer's request at the main page
 pub fn reply_with_message<T>(condition : bool, message : T) -> (HeaderMap, Json<Message>)
     where T : Display
