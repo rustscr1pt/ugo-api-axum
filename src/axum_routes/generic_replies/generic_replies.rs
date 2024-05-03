@@ -35,7 +35,7 @@ pub fn reply_with_serialized_struct<T : Debug + Serialize, A : Display>(conditio
             return (release_headers_for_reply(), Json(ReplyWithStruct::<T>{
                 is_succeed: false,
                 message : message.to_string(),
-                reply: vec![],
+                reply: json_reply,
             }))
         }
     }

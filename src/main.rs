@@ -11,6 +11,7 @@ use crate::axum_routes::routes::admin_management_routes::remove_order_from_order
 use crate::axum_routes::routes::admin_management_routes::write_route::write_route::write_route;
 use crate::axum_routes::routes::login_routes::login_attempt_route::login_attempt_route::login_attempt_route;
 use crate::axum_routes::routes::login_routes::login_attempt_route::login_attempt_route_extension_builder::LoginAttemptExtension;
+use crate::axum_routes::routes::login_routes::stealth_login_route::stealth_login::stealth_login;
 use crate::mysql::admins_filler::async_admins_filler::admins_filler;
 use crate::mysql::admins_filler::fill_admins_sql::fill_admins_sql;
 use crate::mysql::establish_connection::establish_connection;
@@ -53,7 +54,9 @@ async fn main() {
             .layer(Extension(LoginAttemptExtension {
                 tokens_pool: Arc::clone(&tokens_pool),
                 admin_pool : Arc::clone(&arc_admins_pool)
-            }));
+            }))
+        .route("/api/login/stealth", post(stealth_login))
+            .layer(Extension(Arc::clone(&tokens_pool)));
 
     let addr = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
     println!("Running on http://localhost:8000");
