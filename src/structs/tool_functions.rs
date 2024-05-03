@@ -1,8 +1,8 @@
 use std::num::ParseIntError;
 use mysql::{Error, PooledConn};
 use mysql::prelude::Queryable;
-use tokio::sync::MutexGuard;
-use crate::structs::structs::{BasicPartGetAll, EmptyStruct, FormattedObject, NoteObjectNotation};
+use tokio::sync::{MutexGuard, RwLockReadGuard};
+use crate::structs::structs::{BasicPartGetAll, EmptyStruct, FormattedObject, NoteObjectNotation, Token};
 
 pub fn extract_u16(value : String) -> Result<u16, ParseIntError> {
     match value.parse::<u16>() {
@@ -44,4 +44,12 @@ pub fn release_empty_vec() -> Vec<EmptyStruct> {
 
 pub fn release_string_uuid() -> String { // Release a UUID string for placing in React
     return String::from(uuid::Uuid::new_v4())
+}
+
+pub fn token_check_before_action(readable_pool : RwLockReadGuard<Vec<Token>>, token : String) -> bool
+{
+    if readable_pool.iter().any(|object| object.token == token) {
+        return true
+    }
+    return false
 }
