@@ -4,6 +4,7 @@ use axum::routing::post;
 use tokio::sync::{Mutex, RwLock};
 use crate::axum_routes::routes::admin_management_routes::fetch_admins_data::fetch_admins_data::fetch_admins_data;
 use crate::axum_routes::routes::admin_management_routes::fetch_admins_data::fetch_admins_data_extension_builder::FetchAdminsDataExtension;
+use crate::axum_routes::routes::admin_management_routes::remove_admin_account::remove_admin_account::remove_admin_account;
 use crate::axum_routes::routes::login_routes::login_attempt_route::login_attempt_route::login_attempt_route;
 use crate::axum_routes::routes::login_routes::login_attempt_route::login_attempt_route_extension_builder::LoginAttemptExtension;
 use crate::axum_routes::routes::login_routes::stealth_login_route::stealth_login::stealth_login;
@@ -63,7 +64,9 @@ async fn main() {
             .layer(Extension(FetchAdminsDataExtension {
                 pool : Arc::clone(&arc_sql),
                 token_pool : Arc::clone(&tokens_pool)
-            }));
+            }))
+        .route("/api/admins/remove", post(remove_admin_account))
+            .layer(Extension(Arc::clone(&arc_sql)));
 
     let addr = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
     println!("Running on http://localhost:8000");
