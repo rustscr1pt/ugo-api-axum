@@ -12,7 +12,7 @@ pub fn release_headers_for_reply() -> HeaderMap {
 }
 
 // Reject any connections that don't match filters.
-pub fn reject_unmatched_connection() -> (HeaderMap, Json<Message>) {
+pub async fn reject_unmatched_connection() -> (HeaderMap, Json<Message>) {
     return (
             release_headers_for_reply(),
             Json(Message {
