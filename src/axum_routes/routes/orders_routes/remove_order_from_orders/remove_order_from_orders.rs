@@ -4,8 +4,8 @@ use axum::response::IntoResponse;
 use mysql::PooledConn;
 use tokio::sync::Mutex;
 use crate::axum_routes::generic_replies::generic_replies::reply_with_message;
-use crate::axum_routes::routes::admin_management_routes::remove_order_from_orders::remove_order_from_orders_sql::remove_order_from_orders_sql;
-use crate::axum_routes::routes::admin_management_routes::remove_order_from_orders::remove_order_from_orders_structs::RemoveObjectByID;
+use crate::axum_routes::routes::orders_routes::remove_order_from_orders::remove_order_from_orders_sql::remove_order_from_orders_sql;
+use crate::axum_routes::routes::orders_routes::remove_order_from_orders::remove_order_from_orders_structs::RemoveObjectByID;
 
 pub async fn remove_order_from_orders(pool : Extension<Arc<Mutex<PooledConn>>>, Json(body) : Json<RemoveObjectByID>) -> impl IntoResponse {
     match body.id.parse::<u16>() {

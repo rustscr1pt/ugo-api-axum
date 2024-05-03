@@ -1,7 +1,7 @@
 use mysql::{Error, params, PooledConn};
 use mysql::prelude::Queryable;
 use tokio::sync::MutexGuard;
-use crate::axum_routes::routes::admin_management_routes::add_note_to_order::add_note_to_order_structs::InsertStruct;
+use crate::axum_routes::routes::orders_routes::add_note_to_order::add_note_to_order_structs::InsertStruct;
 use crate::structs::structs::NoteObjectNotation;
 
 fn format_notes_parsing(id : u16) -> String {

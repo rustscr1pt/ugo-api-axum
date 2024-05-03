@@ -4,8 +4,8 @@ use axum::response::IntoResponse;
 use mysql::PooledConn;
 use tokio::sync::Mutex;
 use crate::axum_routes::generic_replies::generic_replies::reply_with_serialized_struct;
-use crate::axum_routes::routes::admin_management_routes::add_note_to_order::add_note_to_order_sql::add_note_to_order_sql;
-use crate::axum_routes::routes::admin_management_routes::add_note_to_order::add_note_to_order_structs::AddNoteToOrder;
+use crate::axum_routes::routes::orders_routes::add_note_to_order::add_note_to_order_sql::add_note_to_order_sql;
+use crate::axum_routes::routes::orders_routes::add_note_to_order::add_note_to_order_structs::AddNoteToOrder;
 
 pub async fn add_note_to_order(pool : Extension<Arc<Mutex<PooledConn>>>, Json(body) : Json<AddNoteToOrder>) -> impl IntoResponse {
     match body.order_id.parse::<u16>() {

@@ -2,16 +2,18 @@ use std::sync::Arc;
 use axum::{Extension, Router};
 use axum::routing::post;
 use tokio::sync::{Mutex, RwLock};
-use crate::axum_routes::routes::admin_management_routes::add_note_to_order::add_note_to_order::add_note_to_order;
-use crate::axum_routes::routes::admin_management_routes::change_status_by_id::change_status_by_id::change_status_by_id;
-use crate::axum_routes::routes::admin_management_routes::get_filtered_orders_by_page::get_filtered_orders_by_page::get_filtered_orders_by_page;
-use crate::axum_routes::routes::admin_management_routes::get_orders_by_page::get_orders_by_page::get_orders_by_page;
-use crate::axum_routes::routes::admin_management_routes::remove_note_from_order::remove_note_from_order::remove_note_from_order;
-use crate::axum_routes::routes::admin_management_routes::remove_order_from_orders::remove_order_from_orders::remove_order_from_orders;
-use crate::axum_routes::routes::admin_management_routes::write_route::write_route::write_route;
+use crate::axum_routes::routes::admin_management_routes::fetch_admins_data::fetch_admins_data::fetch_admins_data;
+use crate::axum_routes::routes::admin_management_routes::fetch_admins_data::fetch_admins_data_extension_builder::FetchAdminsDataExtension;
 use crate::axum_routes::routes::login_routes::login_attempt_route::login_attempt_route::login_attempt_route;
 use crate::axum_routes::routes::login_routes::login_attempt_route::login_attempt_route_extension_builder::LoginAttemptExtension;
 use crate::axum_routes::routes::login_routes::stealth_login_route::stealth_login::stealth_login;
+use crate::axum_routes::routes::orders_routes::add_note_to_order::add_note_to_order::add_note_to_order;
+use crate::axum_routes::routes::orders_routes::change_status_by_id::change_status_by_id::change_status_by_id;
+use crate::axum_routes::routes::orders_routes::get_filtered_orders_by_page::get_filtered_orders_by_page::get_filtered_orders_by_page;
+use crate::axum_routes::routes::orders_routes::get_orders_by_page::get_orders_by_page::get_orders_by_page;
+use crate::axum_routes::routes::orders_routes::remove_note_from_order::remove_note_from_order::remove_note_from_order;
+use crate::axum_routes::routes::orders_routes::remove_order_from_orders::remove_order_from_orders::remove_order_from_orders;
+use crate::axum_routes::routes::orders_routes::write_route::write_route::write_route;
 use crate::mysql::admins_filler::async_admins_filler::admins_filler;
 use crate::mysql::admins_filler::fill_admins_sql::fill_admins_sql;
 use crate::mysql::establish_connection::establish_connection;
@@ -56,7 +58,12 @@ async fn main() {
                 admin_pool : Arc::clone(&arc_admins_pool)
             }))
         .route("/api/login/stealth", post(stealth_login))
-            .layer(Extension(Arc::clone(&tokens_pool)));
+            .layer(Extension(Arc::clone(&tokens_pool)))
+        .route("/api/admins/fetch", post(fetch_admins_data))
+            .layer(Extension(FetchAdminsDataExtension {
+                pool : Arc::clone(&arc_sql),
+                token_pool : Arc::clone(&tokens_pool)
+            }));
 
     let addr = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
     println!("Running on http://localhost:8000");

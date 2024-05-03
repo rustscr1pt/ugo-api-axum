@@ -75,3 +75,11 @@ pub struct ReplyWithStruct<T>
     pub message : String,
     pub reply : Vec<T>
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct AdminAccountTemplate {
+    pub id : u16,
+    pub user_login : String,
+    pub user_password : String,
+    pub created : String
+}
