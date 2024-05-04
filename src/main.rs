@@ -23,6 +23,7 @@ use crate::mysql::admins_filler::fill_admins_sql::fill_admins_sql;
 use crate::mysql::establish_connection::establish_connection;
 use crate::mysql::refresh_pool_connection::refresh_pool_connection;
 use crate::mysql::token_worker::token_worker::token_worker;
+use crate::structs::cors_layer::get_cors_layer;
 use crate::structs::structs::{AdminsData, Token};
 
 mod mysql;
@@ -75,7 +76,8 @@ async fn main() {
                 db_pool: Arc::clone(&arc_sql),
                 token_pool: Arc::clone(&tokens_pool),
             }))
-        .fallback(reject_unmatched_connection);
+        .fallback(reject_unmatched_connection)
+        .layer(get_cors_layer());
 
     let addr = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
     println!("Running on http://localhost:8000");
