@@ -29,6 +29,7 @@ pub fn reply_with_message<T>(condition : bool, message : T) -> Json<Message>
     })
 }
 
+// Reply with a data formatted inside a Vec<T>
 pub fn reply_with_serialized_struct<T : Debug + Serialize, A : Display>(condition : bool, message : A, json_reply : Vec<T>) -> Json<ReplyWithStruct<T>>
 {
     match condition {
