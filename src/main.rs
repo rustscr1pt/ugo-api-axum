@@ -77,7 +77,7 @@ async fn main() {
                 token_pool: Arc::clone(&tokens_pool),
             }))
         .fallback(reject_unmatched_connection)
-        .layer(get_cors_layer());
+        .layer(get_cors_layer()); // Set up allowed methods + allowed-origins
 
     let addr = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
     println!("Running on http://localhost:8000");
