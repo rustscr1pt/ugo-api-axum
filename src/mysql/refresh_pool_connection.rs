@@ -6,6 +6,8 @@ use tokio::sync::Mutex;
 use tokio::time::sleep;
 use crate::structs::constants::FILE_LOCATION;
 
+
+// refresh pool with db connection every 1 minute
 pub fn refresh_pool_connection(to_refresh : Arc<Mutex<PooledConn>>) -> () {
     tokio::spawn(async move {
         let mut timer : u8 = 60;
