@@ -7,7 +7,7 @@ use crate::structs::constants::CORS_ROUTE;
 pub fn get_cors_layer() -> CorsLayer {
     return
         CorsLayer::new()
-            .allow_origin(AllowOrigin::any())
+            .allow_origin(AllowOrigin::exact(CORS_ROUTE.parse().unwrap()))
             .allow_headers(vec![
                 header::CONTENT_TYPE,
             ])
