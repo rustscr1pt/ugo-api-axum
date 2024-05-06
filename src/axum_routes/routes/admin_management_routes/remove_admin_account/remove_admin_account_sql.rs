@@ -1,6 +1,8 @@
+use futures::future::err;
 use mysql::{Error, params, PooledConn};
 use mysql::prelude::Queryable;
 use tokio::sync::MutexGuard;
+use crate::axum_routes::generic_replies::generic_log_writer::generic_log_writer;
 
 pub fn remove_admin_account_sql(id : u16, pool : &mut MutexGuard<PooledConn>) -> mysql::Result<(), Error>
 {
@@ -11,7 +13,16 @@ pub fn remove_admin_account_sql(id : u16, pool : &mut MutexGuard<PooledConn>) ->
         })
     )
     {
-        Ok(_) => {return Ok(())}
+        Ok(_) => {
+            match generic_log_writer(format!("Удален аккаунт администратора под номером : {}", id), pool) {
+                Ok(_) => {
+                    return Ok(())
+                }
+                Err(err) => {
+                    return Err(err)
+                }
+            }
+        }
         Err(err) => {return Err(err)}
     }
 }
