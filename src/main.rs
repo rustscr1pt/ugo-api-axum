@@ -11,6 +11,7 @@ use crate::axum_routes::routes::admin_management_routes::remove_admin_account::r
 use crate::axum_routes::routes::login_routes::login_attempt_route::login_attempt_route::login_attempt_route;
 use crate::axum_routes::routes::login_routes::login_attempt_route::login_attempt_route_extension_builder::LoginAttemptExtension;
 use crate::axum_routes::routes::login_routes::stealth_login_route::stealth_login::stealth_login;
+use crate::axum_routes::routes::logs_routes::browse_logs_paginated::browse_logs_paginated::browse_logs_paginated;
 use crate::axum_routes::routes::orders_routes::add_note_to_order::add_note_to_order::add_note_to_order;
 use crate::axum_routes::routes::orders_routes::change_status_by_id::change_status_by_id::change_status_by_id;
 use crate::axum_routes::routes::orders_routes::get_filtered_orders_by_page::get_filtered_orders_by_page::get_filtered_orders_by_page;
@@ -77,6 +78,8 @@ async fn main() {
                 db_pool: Arc::clone(&arc_sql),
                 token_pool: Arc::clone(&tokens_pool),
             }))
+        .route("/api/logs/browse", post(browse_logs_paginated))
+            .layer(Extension(Arc::clone(&arc_sql)))
         .fallback(reject_unmatched_connection)
         .layer(get_cors_layer()); // Set up allowed methods + allowed-origins
 
