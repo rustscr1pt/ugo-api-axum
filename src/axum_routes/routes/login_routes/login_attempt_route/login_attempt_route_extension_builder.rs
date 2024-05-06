@@ -1,8 +1,10 @@
 use std::sync::{Arc};
-use tokio::sync::{RwLock};
+use mysql::PooledConn;
+use tokio::sync::{Mutex, RwLock};
 use crate::structs::structs::{AdminsData, Token};
 #[derive(Clone, Debug)]
 pub struct LoginAttemptExtension {
+    pub db_pool : Arc<Mutex<PooledConn>>,
     pub tokens_pool: Arc<RwLock<Vec<Token>>>,
     pub admin_pool : Arc<RwLock<Vec<AdminsData>>>
 }

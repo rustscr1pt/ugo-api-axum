@@ -59,6 +59,7 @@ async fn main() {
             .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/login/attempt", post(login_attempt_route))
             .layer(Extension(LoginAttemptExtension {
+                db_pool: Arc::clone(&arc_sql),
                 tokens_pool: Arc::clone(&tokens_pool),
                 admin_pool : Arc::clone(&arc_admins_pool)
             }))
