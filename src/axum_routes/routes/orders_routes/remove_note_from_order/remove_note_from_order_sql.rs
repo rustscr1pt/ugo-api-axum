@@ -1,14 +1,22 @@
 use mysql::{Error, PooledConn};
 use mysql::prelude::Queryable;
 use tokio::sync::MutexGuard;
+use crate::axum_routes::generic_replies::generic_log_writer::generic_log_writer;
 use crate::structs::structs::NoteObjectNotation;
 
 pub fn remove_note_from_order_sql(note_id: u16, related_id : u16, pool: &mut MutexGuard<PooledConn>) -> mysql::Result<Vec<NoteObjectNotation>, Error> {
     match pool.query_drop(formatter(note_id)) {
         Ok(_) => {
-            match get_related_notes(related_id, pool) {
-                Ok(value) => {
-                    return Ok(value)
+            match generic_log_writer(format!("Удалена пометка для заявки номер : {}", related_id), pool) {
+                Ok(_) => {
+                    match get_related_notes(related_id, pool) {
+                        Ok(value) => {
+                            return Ok(value)
+                        }
+                        Err(e) => {
+                            return Err(e)
+                        }
+                    }
                 }
                 Err(e) => {
                     return Err(e)
