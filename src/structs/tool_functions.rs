@@ -2,10 +2,10 @@ use std::num::ParseIntError;
 use mysql::{Error, PooledConn};
 use mysql::prelude::Queryable;
 use tokio::sync::{MutexGuard, RwLockReadGuard};
-use crate::structs::structs::{BasicPartGetAll, EmptyStruct, FormattedObject, NoteObjectNotation, Token};
+use crate::structs::structs::{BasicPartGetAll, FormattedObject, NoteObjectNotation, Token};
 
-pub fn extract_u16(value : String) -> Result<u16, ParseIntError> {
-    match value.parse::<u16>() {
+pub fn extract_u32(value : String) -> Result<u32, ParseIntError> {
+    match value.parse::<u32>() {
         Ok(value) => {return Ok(value)}
         Err(err) => {return Err(err)}
     }
@@ -36,10 +36,6 @@ pub fn collect_group_notes(unlocked : &mut MutexGuard<PooledConn>, object : &Bas
             return Err(e)
         }
     }
-}
-
-pub fn release_empty_vec() -> Vec<EmptyStruct> {
-    return vec![]
 }
 
 pub fn release_string_uuid() -> String { // Release a UUID string for placing in React

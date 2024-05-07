@@ -4,7 +4,7 @@ use tokio::sync::MutexGuard;
 use crate::structs::structs::{BasicPartGetAll, FormattedObject};
 use crate::structs::tool_functions::collect_group_notes;
 
-pub fn get_orders_by_page_sql(page_number : u16, rows_per_page : u16, pool : &mut MutexGuard<PooledConn>) -> mysql::Result<Vec<FormattedObject>, Error> {
+pub fn get_orders_by_page_sql(page_number : u32, rows_per_page : u32, pool : &mut MutexGuard<PooledConn>) -> mysql::Result<Vec<FormattedObject>, Error> {
     match pool.query_map(format_the_query(page_number, rows_per_page),
                          |(id, request_status, customer_name, customer_email, customer_self_description, date_time_added)| {
                              BasicPartGetAll {
@@ -36,6 +36,6 @@ pub fn get_orders_by_page_sql(page_number : u16, rows_per_page : u16, pool : &mu
     }
 }
 
-fn format_the_query(page_number : u16, rows_per_page : u16) -> String {
+fn format_the_query(page_number : u32, rows_per_page : u32) -> String {
     return format!("SELECT id, request_status, customer_name, customer_email, customer_self_description, date_time_added FROM `ugo_customers_request` ORDER BY id DESC LIMIT {} OFFSET {}", rows_per_page, rows_per_page * page_number)
 }

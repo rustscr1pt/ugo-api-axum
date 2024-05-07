@@ -2,7 +2,7 @@ use mysql::{Error, PooledConn};
 use mysql::prelude::Queryable;
 use crate::structs::structs::RowsGetter;
 
-pub fn total_rows_in_filtered_sql(pool : &mut PooledConn, filter_type : &String, filter_query : &String) -> mysql::Result<u16, Error> {
+pub fn total_rows_in_filtered_sql(pool : &mut PooledConn, filter_type : &String, filter_query : &String) -> mysql::Result<u32, Error> {
     match pool.query_map(get_formatted(filter_type, filter_query),
                          |counter| {
                              RowsGetter {

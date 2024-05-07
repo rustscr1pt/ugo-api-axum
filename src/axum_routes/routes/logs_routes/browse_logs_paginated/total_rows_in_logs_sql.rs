@@ -3,7 +3,7 @@ use mysql::prelude::Queryable;
 use tokio::sync::MutexGuard;
 use crate::structs::structs::RowsGetter;
 
-pub fn total_rows_in_logs_sql(pool : &mut MutexGuard<PooledConn>) -> mysql::Result<u16, Error> {
+pub fn total_rows_in_logs_sql(pool : &mut MutexGuard<PooledConn>) -> mysql::Result<u32, Error> {
     match pool.query_map(get_formatted(),
                          |count| {
                              RowsGetter {

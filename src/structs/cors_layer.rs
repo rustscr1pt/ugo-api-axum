@@ -1,4 +1,4 @@
-use axum::http::{header, HeaderValue, Method};
+use axum::http::{header, Method};
 use tower_http::cors::{AllowOrigin, CorsLayer};
 use crate::structs::constants::CORS_ROUTE;
 

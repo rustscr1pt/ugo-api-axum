@@ -22,7 +22,7 @@ pub struct Message { // An easy answer to show a result of some action
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct WriteToBaseNewCustomer { // Represents the struct which is written inside mySQL about the customer
-pub id : u16,
+    pub id : u32,
     pub request_status : String,
     pub customer_name : String,
     pub customer_email : String,
@@ -31,7 +31,7 @@ pub id : u16,
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FormattedObject {
-    pub id : u16,
+    pub id : u32,
     pub request_status : String,
     pub customer_name : String,
     pub customer_email : String,
@@ -42,14 +42,14 @@ pub struct FormattedObject {
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct NoteObjectNotation {
-    pub id : u16,
+    pub id : u32,
     pub text_info : String,
     pub date_time : String
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct BasicPartGetAll { // Get first part without json on get all orders request
-pub id : u16,
+    pub id : u32,
     pub request_status : String,
     pub customer_name : String,
     pub customer_email : String,
@@ -59,7 +59,7 @@ pub id : u16,
 
 #[derive(Debug)]
 pub struct RowsGetter {
-    pub count : u16
+    pub count : u32
 }
 
 #[derive(Debug, Serialize)]
@@ -78,7 +78,7 @@ pub struct ReplyWithStruct<T>
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct AdminAccountTemplate {
-    pub id : u16,
+    pub id : u32,
     pub user_login : String,
     pub user_password : String,
     pub created : String

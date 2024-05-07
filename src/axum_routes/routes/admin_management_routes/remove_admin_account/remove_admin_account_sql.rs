@@ -1,12 +1,11 @@
-use futures::future::err;
 use mysql::{Error, params, PooledConn};
 use mysql::prelude::Queryable;
 use tokio::sync::MutexGuard;
 use crate::axum_routes::generic_replies::generic_log_writer::generic_log_writer;
 
-pub fn remove_admin_account_sql(id : u16, pool : &mut MutexGuard<PooledConn>) -> mysql::Result<(), Error>
+pub fn remove_admin_account_sql(id : u32, pool : &mut MutexGuard<PooledConn>) -> mysql::Result<(), Error>
 {
-    let iterable: [u16; 1] = [id];
+    let iterable: [u32; 1] = [id];
     match pool.exec_batch(r#"DELETE FROM ugo_admin_accounts WHERE id = :id"#,
                           iterable.iter().map(|id| params! {
             "id" => id

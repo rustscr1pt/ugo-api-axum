@@ -1,15 +1,14 @@
 use std::fmt::{Debug, Display};
-use axum::http::HeaderMap;
 use axum::Json;
 use serde::Serialize;
-use crate::structs::constants::CORS_ROUTE;
 use crate::structs::structs::{Message, ReplyWithStruct};
 
-pub fn release_headers_for_reply() -> HeaderMap {
-    let mut headers = HeaderMap::new();
-    headers.insert("Access-Control-Allow-Origin", CORS_ROUTE.parse().unwrap());
-    return headers
-}
+// Not working as expected.
+// pub fn release_headers_for_reply() -> HeaderMap {
+//     let mut headers = HeaderMap::new();
+//     headers.insert("Access-Control-Allow-Origin", CORS_ROUTE.parse().unwrap());
+//     return headers
+// }
 
 // Reject any connections that don't match filters.
 pub async fn reject_unmatched_connection() -> Json<Message> {

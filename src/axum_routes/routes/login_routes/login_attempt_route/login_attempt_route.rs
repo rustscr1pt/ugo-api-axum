@@ -1,6 +1,5 @@
 use axum::{Extension, Json};
 use axum::response::IntoResponse;
-use mysql::Error;
 use crate::axum_routes::generic_replies::generic_log_writer::generic_log_writer;
 use crate::axum_routes::generic_replies::generic_replies::reply_with_message;
 use crate::axum_routes::routes::login_routes::login_attempt_route::login_attempt_route_extension_builder::LoginAttemptExtension;
