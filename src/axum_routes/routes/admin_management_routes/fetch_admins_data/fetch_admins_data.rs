@@ -10,7 +10,7 @@ pub async fn fetch_admins_data(pool : Extension<FetchAdminsDataExtension>, Json(
     let unlocked_storage = pool.token_pool.read().await;
     if unlocked_storage.iter().any(|object| object.token == body.token) {
         drop(unlocked_storage);
-        let mut unlocked_pool = pool.pool.lock().await;
+        let mut unlocked_pool = pool.db_pool.lock().await;
         match fetch_admins_data_sql(&mut unlocked_pool) {
             Ok(result) => {
                 reply_with_serialized_struct(true, "Success", result)

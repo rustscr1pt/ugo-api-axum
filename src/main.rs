@@ -68,7 +68,7 @@ async fn main() {
             .layer(Extension(Arc::clone(&tokens_pool)))
         .route("/api/admins/fetch", post(fetch_admins_data))
             .layer(Extension(FetchAdminsDataExtension {
-                pool : Arc::clone(&arc_sql),
+                db_pool: Arc::clone(&arc_sql),
                 token_pool : Arc::clone(&tokens_pool)
             }))
         .route("/api/admins/remove", post(remove_admin_account))

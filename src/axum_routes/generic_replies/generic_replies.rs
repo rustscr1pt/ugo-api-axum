@@ -3,18 +3,11 @@ use axum::Json;
 use serde::Serialize;
 use crate::structs::structs::{Message, ReplyWithStruct};
 
-// Not working as expected.
-// pub fn release_headers_for_reply() -> HeaderMap {
-//     let mut headers = HeaderMap::new();
-//     headers.insert("Access-Control-Allow-Origin", CORS_ROUTE.parse().unwrap());
-//     return headers
-// }
-
 // Reject any connections that don't match filters.
 pub async fn reject_unmatched_connection() -> Json<Message> {
     return Json(Message {
         is_succeed: false,
-        message: "This request is forbidden, your connection is dropped".to_string(),
+        message: "Unauthorized access, your connection is dropped".to_string(),
     })
 }
 
