@@ -1,5 +1,6 @@
+use std::net::SocketAddr;
 use std::sync::Arc;
-use axum::{Extension, Router};
+use axum::{Extension, Router, ServiceExt};
 use axum::routing::post;
 use tokio::sync::{Mutex, RwLock};
 use crate::axum_routes::generic_replies::generic_replies::reject_unmatched_connection;
@@ -85,5 +86,5 @@ async fn main() {
 
     let addr = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
     println!("Running on http://localhost:8000");
-    axum::serve(addr, app).await.unwrap();
+    axum::serve(addr, app.into_make_service_with_connect_info::<SocketAddr>()).await.unwrap();
 }

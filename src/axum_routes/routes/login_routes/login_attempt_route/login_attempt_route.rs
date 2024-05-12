@@ -1,4 +1,6 @@
+use std::net::SocketAddr;
 use axum::{Extension, Json};
+use axum::extract::ConnectInfo;
 use axum::response::IntoResponse;
 use crate::axum_routes::generic_replies::generic_log_writer::generic_log_writer;
 use crate::axum_routes::generic_replies::generic_replies::reply_with_message;
@@ -8,7 +10,8 @@ use crate::structs::constants::SESSION_DURATION;
 use crate::structs::structs::Token;
 use crate::structs::tool_functions::release_string_uuid;
 
-pub async fn login_attempt_route(main_actor : Extension<LoginAttemptExtension>, Json(body) : Json<LoginRequestData>) -> impl IntoResponse {
+pub async fn login_attempt_route(main_actor : Extension<LoginAttemptExtension>, ConnectInfo(addr) : ConnectInfo<SocketAddr>, Json(body) : Json<LoginRequestData>) -> impl IntoResponse {
+    println!("\n\n\n\nMy ip : {:?}\n\n\n\n", addr);
     let read_pool = main_actor.admin_pool.read().await;
     for elements in read_pool.iter() {
         if elements.user_login == body.login && elements.user_password == body.password {
