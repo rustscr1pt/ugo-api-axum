@@ -1,4 +1,3 @@
-use std::net::SocketAddr;
 use std::sync::Arc;
 use axum::{Extension, Router, ServiceExt};
 use axum::routing::post;
@@ -87,5 +86,5 @@ async fn main() {
 
     let addr = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
     println!("Running on http://localhost:8000");
-    axum::serve(addr, app.into_make_service_with_connect_info::<SocketAddr>()).await.unwrap();
+    axum::serve(addr, app).await.unwrap();
 }
