@@ -19,6 +19,7 @@ use crate::axum_routes::routes::ugo_vape::orders_routes::get_orders_by_page::get
 use crate::axum_routes::routes::ugo_vape::orders_routes::remove_note_from_order::remove_note_from_order::remove_note_from_order;
 use crate::axum_routes::routes::ugo_vape::orders_routes::remove_order_from_orders::remove_order_from_orders::remove_order_from_orders;
 use crate::axum_routes::routes::ugo_vape::orders_routes::write_route::write_route::write_route;
+use crate::axum_routes::routes::walgreen::requests_from_users::get_phone_and_name::get_phone_and_name::get_phone_and_name;
 
 use crate::mysql::admins_filler::async_admins_filler::admins_filler;
 use crate::mysql::admins_filler::fill_admins_sql::fill_admins_sql;
