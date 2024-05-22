@@ -1,5 +1,5 @@
 use std::sync::Arc;
-use axum::{Extension, Router, ServiceExt};
+use axum::{Extension, Router};
 use axum::routing::post;
 use tokio::sync::{Mutex, RwLock};
 use crate::axum_routes::generic_replies::generic_replies::reject_unmatched_connection;
@@ -81,6 +81,9 @@ async fn main() {
                 token_pool: Arc::clone(&tokens_pool),
             }))
         .route("/api/logs/browse", post(browse_logs_paginated))
+            .layer(Extension(Arc::clone(&arc_sql)))
+
+        .route("/api/walgreen/customer/write", post(get_phone_and_name))
             .layer(Extension(Arc::clone(&arc_sql)))
         .fallback(reject_unmatched_connection)
         .layer(get_cors_layer()); // Set up allowed methods + allowed-origins

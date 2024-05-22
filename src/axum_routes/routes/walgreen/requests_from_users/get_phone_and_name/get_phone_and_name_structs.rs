@@ -6,5 +6,3 @@ pub struct GetPhoneAndName {
     pub customer_phone_email : String,
     pub customer_comment : String
 }
-
-pub
