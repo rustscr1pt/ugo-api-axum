@@ -86,7 +86,8 @@ async fn main() {
 
         .route("/api/walgreen/customer/write", post(get_phone_and_name))
             .layer(Extension(Arc::clone(&arc_sql)))
-        .route("")
+        .route("/api/walgreen/walgreen_requests/get/page", post(get_walgreen_users_by_page))
+            .layer(Extension(Arc::clone(&arc_sql)))
         .fallback(reject_unmatched_connection)
         .layer(get_cors_layer()); // Set up allowed methods + allowed-origins
 
