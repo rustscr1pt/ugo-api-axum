@@ -1,3 +1,3 @@
-mod get_walgreen_users_filtered_by_page;
+pub mod get_walgreen_users_filtered_by_page;
 pub mod get_walgreen_users_filtered_by_page_sql;
 pub mod total_rows_in_walgreen_users_filtered_sql;
