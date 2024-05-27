@@ -107,6 +107,7 @@ async fn main() {
         .route("/api/walgreen/walgreen_requests/remove_note", post(remove_note_walgreen))
             .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/walgreen/walgreen_requests/remove_order", post(remove_order_walgreen))
+            .layer(Extension(Arc::clone(&arc_sql)))
         .fallback(reject_unmatched_connection)
         .layer(get_cors_layer()); // Set up allowed methods + allowed-origins
 
