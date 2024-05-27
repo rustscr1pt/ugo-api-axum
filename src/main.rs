@@ -19,6 +19,7 @@ use crate::axum_routes::routes::ugo_vape::orders_routes::get_orders_by_page::get
 use crate::axum_routes::routes::ugo_vape::orders_routes::remove_note_from_order::remove_note_from_order::remove_note_from_order;
 use crate::axum_routes::routes::ugo_vape::orders_routes::remove_order_from_orders::remove_order_from_orders::remove_order_from_orders;
 use crate::axum_routes::routes::ugo_vape::orders_routes::write_route::write_route::write_route;
+use crate::axum_routes::routes::walgreen::add_note_walgreen::add_note_walgreen::add_note_walgreen;
 use crate::axum_routes::routes::walgreen::change_status_walgreen::change_status_walgreen::change_status_walgreen;
 use crate::axum_routes::routes::walgreen::get_walgreen_users_by_page::get_walgreen_users_by_page::get_walgreen_users_by_page;
 use crate::axum_routes::routes::walgreen::get_walgreen_users_filtered_by_page::get_walgreen_users_filtered_by_page::get_walgreen_users_filtered_by_page;
@@ -63,6 +64,8 @@ async fn main() {
             .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/orders/remove_order", post(remove_order_from_orders))
             .layer(Extension(Arc::clone(&arc_sql)))
+
+
         .route("/api/login/attempt", post(login_attempt_route))
             .layer(Extension(LoginAttemptExtension {
                 db_pool: Arc::clone(&arc_sql),
@@ -71,6 +74,8 @@ async fn main() {
             }))
         .route("/api/login/stealth", post(stealth_login))
             .layer(Extension(Arc::clone(&tokens_pool)))
+
+
         .route("/api/admins/fetch", post(fetch_admins_data))
             .layer(Extension(FetchAdminsDataExtension {
                 db_pool: Arc::clone(&arc_sql),
@@ -86,6 +91,7 @@ async fn main() {
         .route("/api/logs/browse", post(browse_logs_paginated))
             .layer(Extension(Arc::clone(&arc_sql)))
 
+
         .route("/api/walgreen/customer/write", post(get_phone_and_name))
             .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/walgreen/walgreen_requests/get/page", post(get_walgreen_users_by_page))
@@ -93,6 +99,8 @@ async fn main() {
         .route("/api/walgreen/walgreen_requests/filtered/page", post(get_walgreen_users_filtered_by_page))
             .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/walgreen/walgreen_requests/change_status", post(change_status_walgreen))
+            .layer(Extension(Arc::clone(&arc_sql)))
+        .route("/api/walgreen/walgreen_requests/add_note", post(add_note_walgreen))
             .layer(Extension(Arc::clone(&arc_sql)))
         .fallback(reject_unmatched_connection)
         .layer(get_cors_layer()); // Set up allowed methods + allowed-origins

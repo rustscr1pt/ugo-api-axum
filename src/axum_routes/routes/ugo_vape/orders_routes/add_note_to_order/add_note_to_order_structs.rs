@@ -7,6 +7,6 @@ pub struct AddNoteToOrder {
 }
 
 pub struct InsertStruct {
-    pub id : u16,
+    pub id : u32,
     pub note : String
 }
