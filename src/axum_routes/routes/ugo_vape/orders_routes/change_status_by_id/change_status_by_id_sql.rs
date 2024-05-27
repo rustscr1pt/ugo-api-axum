@@ -4,7 +4,7 @@ use tokio::sync::MutexGuard;
 use crate::axum_routes::generic_replies::generic_log_writer::generic_log_writer;
 use crate::axum_routes::routes::ugo_vape::orders_routes::change_status_by_id::change_status_by_id_structs::InsertStruct;
 
-pub fn change_status_by_id_sql(unlocked : &mut MutexGuard<PooledConn>, id : u16, new_status : String) -> mysql::Result<(), Error> {
+pub fn change_status_by_id_sql(unlocked : &mut MutexGuard<PooledConn>, id : u32, new_status : String) -> mysql::Result<(), Error> {
     let mut to_insert : Vec<InsertStruct> = Vec::with_capacity(1);
     to_insert.push(InsertStruct {
         id,

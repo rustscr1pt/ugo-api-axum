@@ -7,6 +7,6 @@ pub struct ChangeOrderStatusBody {
 }
 
 pub struct InsertStruct {
-    pub id : u16,
+    pub id : u32,
     pub new_status : String
 }
