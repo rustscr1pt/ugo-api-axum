@@ -24,6 +24,7 @@ use crate::axum_routes::routes::walgreen::change_status_walgreen::change_status_
 use crate::axum_routes::routes::walgreen::get_walgreen_users_by_page::get_walgreen_users_by_page::get_walgreen_users_by_page;
 use crate::axum_routes::routes::walgreen::get_walgreen_users_filtered_by_page::get_walgreen_users_filtered_by_page::get_walgreen_users_filtered_by_page;
 use crate::axum_routes::routes::walgreen::remove_note_walgreen::remove_note_walgreen::remove_note_walgreen;
+use crate::axum_routes::routes::walgreen::remove_order_walgreen::remove_order_walgreen::remove_order_walgreen;
 use crate::axum_routes::routes::walgreen::requests_from_users::get_phone_and_name::get_phone_and_name::get_phone_and_name;
 
 use crate::mysql::admins_filler::async_admins_filler::admins_filler;
@@ -105,6 +106,7 @@ async fn main() {
             .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/walgreen/walgreen_requests/remove_note", post(remove_note_walgreen))
             .layer(Extension(Arc::clone(&arc_sql)))
+        .route("/api/walgreen/walgreen_requests/remove_order", post(remove_order_walgreen))
         .fallback(reject_unmatched_connection)
         .layer(get_cors_layer()); // Set up allowed methods + allowed-origins
 

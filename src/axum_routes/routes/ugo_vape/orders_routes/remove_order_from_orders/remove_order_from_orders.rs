@@ -6,9 +6,10 @@ use tokio::sync::Mutex;
 use crate::axum_routes::generic_replies::generic_replies::reply_with_message;
 use crate::axum_routes::routes::ugo_vape::orders_routes::remove_order_from_orders::remove_order_from_orders_sql::remove_order_from_orders_sql;
 use crate::axum_routes::routes::ugo_vape::orders_routes::remove_order_from_orders::remove_order_from_orders_structs::RemoveObjectByID;
+use crate::structs::tool_functions::extract_u32;
 
 pub async fn remove_order_from_orders(pool : Extension<Arc<Mutex<PooledConn>>>, Json(body) : Json<RemoveObjectByID>) -> impl IntoResponse {
-    match body.id.parse::<u16>() {
+    match extract_u32(body.id) {
         Ok(id) => {
             let mut unlocked = pool.lock().await;
             match remove_order_from_orders_sql(&mut unlocked, id) {
