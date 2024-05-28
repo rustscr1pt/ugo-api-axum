@@ -9,6 +9,7 @@ use tower_http::cors::{AllowOrigin, CorsLayer};
 // https://docs.rs/tower-http/0.5.2/tower_http/cors/struct.CorsLayer.html#method.allow_origin
 
 
+// OLD VERSION - RETURN IF SMTH GOES WRONG
 // pub fn get_cors_layer() -> CorsLayer {
 //     return
 //         CorsLayer::new()
@@ -21,6 +22,11 @@ use tower_http::cors::{AllowOrigin, CorsLayer};
 //                 Method::POST,
 //             ])
 // }
+
+
+// Allowed origins
+// https://ugo-vape.ru/
+// https://walgreenlogistics.ru/
 
 pub fn get_cors_layer() -> CorsLayer {
 
