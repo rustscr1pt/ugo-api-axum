@@ -38,6 +38,7 @@ use crate::structs::structs::{AdminsData, Token};
 mod mysql;
 mod structs;
 mod axum_routes;
+mod tests;
 
 #[tokio::main]
 async fn main() {
