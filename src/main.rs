@@ -32,6 +32,8 @@ use crate::mysql::admins_filler::fill_admins_sql::fill_admins_sql;
 use crate::mysql::establish_connection::establish_connection;
 use crate::mysql::refresh_pool_connection::refresh_pool_connection;
 use crate::mysql::token_worker::token_worker::token_worker;
+
+use crate::structs::constants::DEPLOY_PORT;
 use crate::structs::cors_layer::get_cors_layer;
 use crate::structs::structs::{AdminsData, Token};
 
@@ -112,7 +114,7 @@ async fn main() {
         .fallback(reject_unmatched_connection)
         .layer(get_cors_layer()); // Set up allowed methods + allowed-origins
 
-    let addr = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
-    println!("Running on http://localhost:8000");
+    let addr = tokio::net::TcpListener::bind(format!("0.0.0.0:{}", DEPLOY_PORT)).await.unwrap();
+    println!("Running on http://localhost:{}", DEPLOY_PORT);
     axum::serve(addr, app).await.unwrap();
 }
