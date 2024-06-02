@@ -2,6 +2,7 @@ use std::fs;
 use mysql::Pool;
 use crate::structs::constants::FILE_LOCATION;
 
+// Check if it's possible to establish the connection with db
 #[test]
 fn check_connection_mysql() -> Result<(), String> {
     return match fs::read_to_string(FILE_LOCATION) {
