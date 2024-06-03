@@ -31,8 +31,10 @@ use tower_http::cors::{AllowOrigin, CorsLayer};
 pub fn get_cors_layer() -> CorsLayer {
 
     let allowed_origins = [
-        "http://localhost:3000".parse().unwrap(),
-        "http://localhost:8001".parse().unwrap()
+        "https://ugo-vape.ru".parse().unwrap(),
+        "https://walgreenlogistics.ru".parse().unwrap(),
+        "http://iekgithubg.temp.swtest.ru".parse().unwrap(),
+        "http://localhost:3000".parse().unwrap()
     ];
 
     return
