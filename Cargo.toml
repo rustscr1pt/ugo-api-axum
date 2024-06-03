@@ -17,4 +17,3 @@ online = "4.0.2"
 futures = "0.3.30"
 mysql = "24.0.0"
 tower-http = { version = "0.5.2", features = ["cors"] }
-port_scanner = "0.1.5"
