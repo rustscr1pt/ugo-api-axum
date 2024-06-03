@@ -25,8 +25,11 @@ use tower_http::cors::{AllowOrigin, CorsLayer};
 
 
 // Allowed origins
-// https://ugo-vape.ru/
-// https://walgreenlogistics.ru/
+// https://ugo-vape.ru
+// https://walgreenlogistics.ru
+
+// Replace cors route here! + check if there is a "/" at the end of URL, it shouldn't be there!
+// Otherwise, it won't work as expected
 
 pub fn get_cors_layer() -> CorsLayer {
 
