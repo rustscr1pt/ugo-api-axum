@@ -6,8 +6,7 @@ use tokio::sync::Mutex;
 use crate::axum_routes::routes::ugo_vape::orders_routes::write_route::write_route::write_route;
 
 pub fn ugo_vape_web(arc_sql : Arc<Mutex<PooledConn>>) -> Router {
-    let router = Router::new()
+    return Router::new()
         .route("/data/write", post(write_route))
-        .layer(Extension(Arc::clone(&arc_sql)));
-    return router
+            .layer(Extension(Arc::clone(&arc_sql)));
 }

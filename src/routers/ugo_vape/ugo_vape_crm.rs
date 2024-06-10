@@ -11,18 +11,17 @@ use crate::axum_routes::routes::ugo_vape::orders_routes::remove_note_from_order:
 use crate::axum_routes::routes::ugo_vape::orders_routes::remove_order_from_orders::remove_order_from_orders::remove_order_from_orders;
 
 pub fn ugo_vape_crm(arc_sql : Arc<Mutex<PooledConn>>) -> Router {
-    let router = Router::new()
+    return Router::new()
         .route("/api/orders/get/page", post(get_orders_by_page))
-        .layer(Extension(Arc::clone(&arc_sql)))
+            .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/orders/page/filtered", post(get_filtered_orders_by_page))
-        .layer(Extension(Arc::clone(&arc_sql)))
+            .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/orders/change_status", post(change_status_by_id))
-        .layer(Extension(Arc::clone(&arc_sql)))
+            .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/orders/add_note", post(add_note_to_order))
-        .layer(Extension(Arc::clone(&arc_sql)))
+            .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/orders/remove_note", post(remove_note_from_order))
-        .layer(Extension(Arc::clone(&arc_sql)))
+            .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/orders/remove_order", post(remove_order_from_orders))
-        .layer(Extension(Arc::clone(&arc_sql)));
-    return router
+            .layer(Extension(Arc::clone(&arc_sql)))
 }

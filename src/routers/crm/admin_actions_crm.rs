@@ -11,18 +11,17 @@ use crate::axum_routes::routes::ugo_vape::admin_management_routes::remove_admin_
 use crate::structs::structs::Token;
 
 pub fn admin_actions_crm(arc_sql : Arc<Mutex<PooledConn>>, tokens_pool : Arc<RwLock<Vec<Token>>>) -> Router {
-    let router = Router::new()
+    return Router::new()
         .route("/api/admins/fetch", post(fetch_admins_data))
-        .layer(Extension(FetchAdminsDataExtension {
-            db_pool: Arc::clone(&arc_sql),
-            token_pool : Arc::clone(&tokens_pool)
-        }))
+            .layer(Extension(FetchAdminsDataExtension {
+                db_pool: Arc::clone(&arc_sql),
+                token_pool : Arc::clone(&tokens_pool)
+            }))
         .route("/api/admins/remove", post(remove_admin_account))
-        .layer(Extension(Arc::clone(&arc_sql)))
+            .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/admins/add", post(add_admin_account))
-        .layer(Extension(AddAdminAccountExtensionBuilder {
-            db_pool: Arc::clone(&arc_sql),
-            token_pool: Arc::clone(&tokens_pool),
-        }));
-    return router
+            .layer(Extension(AddAdminAccountExtensionBuilder {
+                db_pool: Arc::clone(&arc_sql),
+                token_pool: Arc::clone(&tokens_pool),
+            }))
 }

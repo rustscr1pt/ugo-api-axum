@@ -8,5 +8,5 @@ use crate::axum_routes::routes::ugo_vape::logs_routes::browse_logs_paginated::br
 pub fn logs_actions_crm(arc_sql : Arc<Mutex<PooledConn>>) -> Router {
     return Router::new()
         .route("/api/logs/browse", post(browse_logs_paginated))
-        .layer(Extension(Arc::clone(&arc_sql)))
+            .layer(Extension(Arc::clone(&arc_sql)))
 }
