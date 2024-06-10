@@ -1,37 +1,19 @@
 use std::sync::Arc;
-use axum::{Extension, Router};
-use axum::routing::post;
+use axum::{Router};
 use tokio::sync::{Mutex, RwLock};
 use crate::axum_routes::generic_replies::generic_replies::reject_unmatched_connection;
-use crate::axum_routes::routes::ugo_vape::admin_management_routes::add_admin_account::add_admin_account::add_admin_account;
-use crate::axum_routes::routes::ugo_vape::admin_management_routes::add_admin_account::add_admin_account_extension_builder::AddAdminAccountExtensionBuilder;
-use crate::axum_routes::routes::ugo_vape::admin_management_routes::fetch_admins_data::fetch_admins_data::fetch_admins_data;
-use crate::axum_routes::routes::ugo_vape::admin_management_routes::fetch_admins_data::fetch_admins_data_extension_builder::FetchAdminsDataExtension;
-use crate::axum_routes::routes::ugo_vape::admin_management_routes::remove_admin_account::remove_admin_account::remove_admin_account;
-use crate::axum_routes::routes::ugo_vape::login_routes::login_attempt_route::login_attempt_route::login_attempt_route;
-use crate::axum_routes::routes::ugo_vape::login_routes::login_attempt_route::login_attempt_route_extension_builder::LoginAttemptExtension;
-use crate::axum_routes::routes::ugo_vape::login_routes::stealth_login_route::stealth_login::stealth_login;
-use crate::axum_routes::routes::ugo_vape::logs_routes::browse_logs_paginated::browse_logs_paginated::browse_logs_paginated;
-use crate::axum_routes::routes::ugo_vape::orders_routes::add_note_to_order::add_note_to_order::add_note_to_order;
-use crate::axum_routes::routes::ugo_vape::orders_routes::change_status_by_id::change_status_by_id::change_status_by_id;
-use crate::axum_routes::routes::ugo_vape::orders_routes::get_filtered_orders_by_page::get_filtered_orders_by_page::get_filtered_orders_by_page;
-use crate::axum_routes::routes::ugo_vape::orders_routes::get_orders_by_page::get_orders_by_page::get_orders_by_page;
-use crate::axum_routes::routes::ugo_vape::orders_routes::remove_note_from_order::remove_note_from_order::remove_note_from_order;
-use crate::axum_routes::routes::ugo_vape::orders_routes::remove_order_from_orders::remove_order_from_orders::remove_order_from_orders;
-use crate::axum_routes::routes::ugo_vape::orders_routes::write_route::write_route::write_route;
-use crate::axum_routes::routes::walgreen::add_note_walgreen::add_note_walgreen::add_note_walgreen;
-use crate::axum_routes::routes::walgreen::change_status_walgreen::change_status_walgreen::change_status_walgreen;
-use crate::axum_routes::routes::walgreen::get_walgreen_users_by_page::get_walgreen_users_by_page::get_walgreen_users_by_page;
-use crate::axum_routes::routes::walgreen::get_walgreen_users_filtered_by_page::get_walgreen_users_filtered_by_page::get_walgreen_users_filtered_by_page;
-use crate::axum_routes::routes::walgreen::remove_note_walgreen::remove_note_walgreen::remove_note_walgreen;
-use crate::axum_routes::routes::walgreen::remove_order_walgreen::remove_order_walgreen::remove_order_walgreen;
-use crate::axum_routes::routes::walgreen::requests_from_users::get_phone_and_name::get_phone_and_name::get_phone_and_name;
-
 use crate::mysql::admins_filler::async_admins_filler::admins_filler;
 use crate::mysql::admins_filler::fill_admins_sql::fill_admins_sql;
 use crate::mysql::establish_connection::establish_connection;
 use crate::mysql::refresh_pool_connection::refresh_pool_connection;
 use crate::mysql::token_worker::token_worker::token_worker;
+use crate::routers::crm::admin_actions_crm::admin_actions_crm;
+use crate::routers::crm::login_actions_crm::login_actions_crm;
+use crate::routers::crm::logs_actions_crm::logs_actions_crm;
+use crate::routers::ugo_vape::ugo_vape_crm::ugo_vape_crm;
+use crate::routers::ugo_vape::ugo_vape_web::ugo_vape_web;
+use crate::routers::walgreen::walgreen_crm::walgreen_crm;
+use crate::routers::walgreen::walgreen_web::walgreen_web;
 
 use crate::structs::constants::DEPLOY_PORT;
 use crate::structs::cors_layer::get_cors_layer;
@@ -41,6 +23,7 @@ mod mysql;
 mod structs;
 mod axum_routes;
 mod tests;
+mod routers;
 
 #[tokio::main]
 async fn main() {
@@ -55,62 +38,16 @@ async fn main() {
     token_worker(Arc::clone(&tokens_pool)); // spawn an active tokens cleaner
 
     let app = Router::new()
-        .route("/data/write", post(write_route))
-            .layer(Extension(Arc::clone(&arc_sql)))
-        .route("/api/orders/get/page", post(get_orders_by_page))
-            .layer(Extension(Arc::clone(&arc_sql)))
-        .route("/api/orders/page/filtered", post(get_filtered_orders_by_page))
-            .layer(Extension(Arc::clone(&arc_sql)))
-        .route("/api/orders/change_status", post(change_status_by_id))
-            .layer(Extension(Arc::clone(&arc_sql)))
-        .route("/api/orders/add_note", post(add_note_to_order))
-            .layer(Extension(Arc::clone(&arc_sql)))
-        .route("/api/orders/remove_note", post(remove_note_from_order))
-            .layer(Extension(Arc::clone(&arc_sql)))
-        .route("/api/orders/remove_order", post(remove_order_from_orders))
-            .layer(Extension(Arc::clone(&arc_sql)))
+        .merge(ugo_vape_web(Arc::clone(&arc_sql)))
+        .merge(ugo_vape_crm(Arc::clone(&arc_sql)))
 
+        .merge(walgreen_web(Arc::clone(&arc_sql)))
+        .merge(walgreen_crm(Arc::clone(&arc_sql)))
 
-        .route("/api/login/attempt", post(login_attempt_route))
-            .layer(Extension(LoginAttemptExtension {
-                db_pool: Arc::clone(&arc_sql),
-                tokens_pool: Arc::clone(&tokens_pool),
-                admin_pool : Arc::clone(&arc_admins_pool)
-            }))
-        .route("/api/login/stealth", post(stealth_login))
-            .layer(Extension(Arc::clone(&tokens_pool)))
+        .merge(admin_actions_crm(Arc::clone(&arc_sql), Arc::clone(&tokens_pool)))
+        .merge(login_actions_crm(Arc::clone(&arc_sql), Arc::clone(&tokens_pool), Arc::clone(&arc_admins_pool)))
+        .merge(logs_actions_crm(Arc::clone(&arc_sql)))
 
-
-        .route("/api/admins/fetch", post(fetch_admins_data))
-            .layer(Extension(FetchAdminsDataExtension {
-                db_pool: Arc::clone(&arc_sql),
-                token_pool : Arc::clone(&tokens_pool)
-            }))
-        .route("/api/admins/remove", post(remove_admin_account))
-            .layer(Extension(Arc::clone(&arc_sql)))
-        .route("/api/admins/add", post(add_admin_account))
-            .layer(Extension(AddAdminAccountExtensionBuilder {
-                db_pool: Arc::clone(&arc_sql),
-                token_pool: Arc::clone(&tokens_pool),
-            }))
-        .route("/api/logs/browse", post(browse_logs_paginated))
-            .layer(Extension(Arc::clone(&arc_sql)))
-
-
-        .route("/api/walgreen/customer/write", post(get_phone_and_name))
-            .layer(Extension(Arc::clone(&arc_sql)))
-        .route("/api/walgreen/walgreen_requests/get/page", post(get_walgreen_users_by_page))
-            .layer(Extension(Arc::clone(&arc_sql)))
-        .route("/api/walgreen/walgreen_requests/filtered/page", post(get_walgreen_users_filtered_by_page))
-            .layer(Extension(Arc::clone(&arc_sql)))
-        .route("/api/walgreen/walgreen_requests/change_status", post(change_status_walgreen))
-            .layer(Extension(Arc::clone(&arc_sql)))
-        .route("/api/walgreen/walgreen_requests/add_note", post(add_note_walgreen))
-            .layer(Extension(Arc::clone(&arc_sql)))
-        .route("/api/walgreen/walgreen_requests/remove_note", post(remove_note_walgreen))
-            .layer(Extension(Arc::clone(&arc_sql)))
-        .route("/api/walgreen/walgreen_requests/remove_order", post(remove_order_walgreen))
-            .layer(Extension(Arc::clone(&arc_sql)))
         .fallback(reject_unmatched_connection)
         .layer(get_cors_layer()); // Set up allowed methods + allowed-origins
 
