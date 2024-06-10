@@ -8,6 +8,8 @@ use crate::axum_routes::routes::ugo_vape::login_routes::login_attempt_route::log
 use crate::axum_routes::routes::ugo_vape::login_routes::stealth_login_route::stealth_login::stealth_login;
 use crate::structs::structs::{AdminsData, Token};
 
+// Defined routes are used for logging in (__admin-panel)
+
 pub fn login_actions_crm(arc_sql : Arc<Mutex<PooledConn>>, tokens_pool : Arc<RwLock<Vec<Token>>>, arc_admins_pool : Arc<RwLock<Vec<AdminsData>>>) -> Router {
     return Router::new()
         .route("/api/login/attempt", post(login_attempt_route))

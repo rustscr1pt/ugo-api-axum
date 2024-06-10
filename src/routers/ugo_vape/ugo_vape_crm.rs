@@ -10,6 +10,8 @@ use crate::axum_routes::routes::ugo_vape::orders_routes::get_orders_by_page::get
 use crate::axum_routes::routes::ugo_vape::orders_routes::remove_note_from_order::remove_note_from_order::remove_note_from_order;
 use crate::axum_routes::routes::ugo_vape::orders_routes::remove_order_from_orders::remove_order_from_orders::remove_order_from_orders;
 
+// Defined routes are used for actions with orders from ugo-vape in (__admin-panel)
+
 pub fn ugo_vape_crm(arc_sql : Arc<Mutex<PooledConn>>) -> Router {
     return Router::new()
         .route("/api/orders/get/page", post(get_orders_by_page))

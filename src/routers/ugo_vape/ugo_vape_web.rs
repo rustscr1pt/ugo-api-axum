@@ -5,6 +5,8 @@ use mysql::PooledConn;
 use tokio::sync::Mutex;
 use crate::axum_routes::routes::ugo_vape::orders_routes::write_route::write_route::write_route;
 
+// Defined routes are used for actions in the ugo-vape.ru website
+
 pub fn ugo_vape_web(arc_sql : Arc<Mutex<PooledConn>>) -> Router {
     return Router::new()
         .route("/data/write", post(write_route))

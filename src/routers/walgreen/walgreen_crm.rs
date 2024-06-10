@@ -10,6 +10,8 @@ use crate::axum_routes::routes::walgreen::get_walgreen_users_filtered_by_page::g
 use crate::axum_routes::routes::walgreen::remove_note_walgreen::remove_note_walgreen::remove_note_walgreen;
 use crate::axum_routes::routes::walgreen::remove_order_walgreen::remove_order_walgreen::remove_order_walgreen;
 
+// Defined routes are used for actions with orders from walgreenlogistics.ru in (__admin-panel)
+
 pub fn walgreen_crm(arc_sql : Arc<Mutex<PooledConn>>) -> Router {
     return Router::new()
         .route("/api/walgreen/walgreen_requests/get/page", post(get_walgreen_users_by_page))

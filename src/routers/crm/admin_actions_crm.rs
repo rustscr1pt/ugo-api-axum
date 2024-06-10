@@ -10,6 +10,8 @@ use crate::axum_routes::routes::ugo_vape::admin_management_routes::fetch_admins_
 use crate::axum_routes::routes::ugo_vape::admin_management_routes::remove_admin_account::remove_admin_account::remove_admin_account;
 use crate::structs::structs::Token;
 
+// Defined routes are used for actions in the Admins screen (__admin-panel)
+
 pub fn admin_actions_crm(arc_sql : Arc<Mutex<PooledConn>>, tokens_pool : Arc<RwLock<Vec<Token>>>) -> Router {
     return Router::new()
         .route("/api/admins/fetch", post(fetch_admins_data))
