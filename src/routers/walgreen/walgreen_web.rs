@@ -3,7 +3,7 @@ use axum::{Extension, Router};
 use axum::routing::post;
 use mysql::PooledConn;
 use tokio::sync::Mutex;
-use crate::axum_routes::routes::walgreen::requests_from_users::get_phone_and_name::get_phone_and_name::get_phone_and_name;
+use crate::routers::walgreen::walgreen_web_routes::get_phone_and_name::get_phone_and_name::get_phone_and_name;
 
 // Defined routes are used for actions in the walgreenlogistics.ru website
 

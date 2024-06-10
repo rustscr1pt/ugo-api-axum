@@ -3,12 +3,12 @@ use axum::{Extension, Router};
 use axum::routing::post;
 use mysql::PooledConn;
 use tokio::sync::Mutex;
-use crate::axum_routes::routes::walgreen::add_note_walgreen::add_note_walgreen::add_note_walgreen;
-use crate::axum_routes::routes::walgreen::change_status_walgreen::change_status_walgreen::change_status_walgreen;
-use crate::axum_routes::routes::walgreen::get_walgreen_users_by_page::get_walgreen_users_by_page::get_walgreen_users_by_page;
-use crate::axum_routes::routes::walgreen::get_walgreen_users_filtered_by_page::get_walgreen_users_filtered_by_page::get_walgreen_users_filtered_by_page;
-use crate::axum_routes::routes::walgreen::remove_note_walgreen::remove_note_walgreen::remove_note_walgreen;
-use crate::axum_routes::routes::walgreen::remove_order_walgreen::remove_order_walgreen::remove_order_walgreen;
+use crate::routers::walgreen::walgreen_crm_routes::add_note_walgreen::add_note_walgreen::add_note_walgreen;
+use crate::routers::walgreen::walgreen_crm_routes::change_status_walgreen::change_status_walgreen::change_status_walgreen;
+use crate::routers::walgreen::walgreen_crm_routes::get_walgreen_users_by_page::get_walgreen_users_by_page::get_walgreen_users_by_page;
+use crate::routers::walgreen::walgreen_crm_routes::get_walgreen_users_filtered_by_page::get_walgreen_users_filtered_by_page::get_walgreen_users_filtered_by_page;
+use crate::routers::walgreen::walgreen_crm_routes::remove_note_walgreen::remove_note_walgreen::remove_note_walgreen;
+use crate::routers::walgreen::walgreen_crm_routes::remove_order_walgreen::remove_order_walgreen::remove_order_walgreen;
 
 // Defined routes are used for actions with orders from walgreenlogistics.ru in (__admin-panel)
 

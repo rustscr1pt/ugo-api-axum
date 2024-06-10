@@ -1,7 +1,7 @@
 use std::sync::Arc;
 use axum::{Router};
 use tokio::sync::{Mutex, RwLock};
-use crate::axum_routes::generic_replies::generic_replies::reject_unmatched_connection;
+use crate::generic_replies::generic_replies::reject_unmatched_connection;
 use crate::mysql::admins_filler::async_admins_filler::admins_filler;
 use crate::mysql::admins_filler::fill_admins_sql::fill_admins_sql;
 use crate::mysql::establish_connection::establish_connection;
@@ -21,9 +21,9 @@ use crate::structs::structs::{AdminsData, Token};
 
 mod mysql;
 mod structs;
-mod axum_routes;
 mod tests;
 mod routers;
+mod generic_replies;
 
 #[tokio::main]
 async fn main() {

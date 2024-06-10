@@ -3,7 +3,7 @@ use axum::{Extension, Router};
 use axum::routing::post;
 use mysql::PooledConn;
 use tokio::sync::Mutex;
-use crate::axum_routes::routes::ugo_vape::orders_routes::write_route::write_route::write_route;
+use crate::routers::ugo_vape::ugo_vape_web_routes::write_route::write_route::write_route;
 
 // Defined routes are used for actions in the ugo-vape.ru website
 
