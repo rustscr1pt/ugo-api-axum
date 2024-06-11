@@ -11,6 +11,7 @@ pub fn extract_u32(value : String) -> Result<u32, ParseIntError> {
     }
 }
 
+// Collect notes for a user request with related id from the db. (ugo-vape)
 pub fn collect_group_notes(unlocked : &mut MutexGuard<PooledConn>, object : &BasicPartGetAll) -> mysql::Result<FormattedObject, Error> {
     match unlocked.query_map(format!("SELECT id, text_info, date_time FROM order_notes WHERE related_id = {}", object.id),
                              |(id, text_info, date_time)| {
@@ -38,6 +39,7 @@ pub fn collect_group_notes(unlocked : &mut MutexGuard<PooledConn>, object : &Bas
     }
 }
 
+// Collect notes for a user request with related id from the db. (walgreen)
 pub fn collect_walgreen_notes(unlocked : &mut MutexGuard<PooledConn>, object : &BasicPartGetAll) -> mysql::Result<FormattedObject, Error> {
     match unlocked.query_map(format!("SELECT id, text_info, date_time FROM walgreen_order_notes WHERE related_id = {}", object.id),
         |(id, text_info, date_time)| {

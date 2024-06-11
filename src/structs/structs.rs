@@ -9,7 +9,7 @@ pub struct AdminsData { // Represents the admin which is added in the admins sta
 }
 
 #[derive(Debug, Clone)]
-pub struct Token {
+pub struct Token { // Represents one active login token in storage. With timing before disconnection
     pub token : String,
     pub time_remaining : u16
 }
@@ -68,7 +68,7 @@ pub struct EmptyStruct {
 }
 
 #[derive(Debug, Serialize)]
-pub struct ReplyWithStruct<T>
+pub struct ReplyWithStruct<T> // Represents a generic reply for request with data as answer.
     where T : Debug + Serialize
 {
     pub is_succeed : bool,
