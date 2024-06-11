@@ -6,6 +6,8 @@ use tokio::time::sleep;
 use crate::mysql::admins_filler::fill_admins_sql::fill_admins_sql;
 use crate::structs::structs::AdminsData;
 
+// Fill the vector with admins logins & passwords from the db and refresh it every 15 minutes
+
 pub fn admins_filler(pool : Arc<Mutex<PooledConn>>, to_fill : Arc<RwLock<Vec<AdminsData>>>) -> () {
     tokio::spawn(async move {
         let mut countdown : u16 = 900;
