@@ -3,8 +3,7 @@ use axum::{Extension, Json};
 use axum::response::IntoResponse;
 use tokio::sync::RwLock;
 use crate::generic_replies::generic_replies::reply_with_message;
-use crate::routers::crm::login_actions_crm_routes::stealth_login_route::stealth_login_structs::StealthAuthToken;
-use crate::structs::structs::Token;
+use crate::structs::structs::{StealthAuthToken, Token};
 
 pub async fn stealth_login(pool : Extension<Arc<RwLock<Vec<Token>>>>, Json(body) : Json<StealthAuthToken>) -> impl IntoResponse {
     let unlocked = pool.read().await;

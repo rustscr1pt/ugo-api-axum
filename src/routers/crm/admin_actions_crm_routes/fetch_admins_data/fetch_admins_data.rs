@@ -2,8 +2,7 @@ use axum::{Extension, Json};
 use axum::response::IntoResponse;
 use crate::generic_replies::generic_replies::reply_with_serialized_struct;
 use crate::routers::crm::admin_actions_crm_routes::fetch_admins_data::fetch_admins_data_sql::fetch_admins_data_sql;
-use crate::routers::crm::login_actions_crm_routes::stealth_login_route::stealth_login_structs::StealthAuthToken;
-use crate::structs::structs::FetchAdminsDataExtension;
+use crate::structs::structs::{FetchAdminsDataExtension, StealthAuthToken};
 
 pub async fn fetch_admins_data(pool : Extension<FetchAdminsDataExtension>, Json(body) : Json<StealthAuthToken>) -> impl IntoResponse
 {
