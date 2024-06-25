@@ -4,11 +4,10 @@ use axum::routing::post;
 use mysql::PooledConn;
 use tokio::sync::{Mutex, RwLock};
 use crate::routers::crm::admin_actions_crm_routes::add_admin_account::add_admin_account::add_admin_account;
-use crate::routers::crm::admin_actions_crm_routes::add_admin_account::add_admin_account_extension_builder::AddAdminAccountExtensionBuilder;
 use crate::routers::crm::admin_actions_crm_routes::fetch_admins_data::fetch_admins_data::fetch_admins_data;
 use crate::routers::crm::admin_actions_crm_routes::fetch_admins_data::fetch_admins_data_extension_builder::FetchAdminsDataExtension;
 use crate::routers::crm::admin_actions_crm_routes::remove_admin_account::remove_admin_account::remove_admin_account;
-use crate::structs::structs::Token;
+use crate::structs::structs::{AddAdminAccountExtensionBuilder, Token};
 
 // Defined routes are used for actions in the Admins screen (__admin-panel)
 

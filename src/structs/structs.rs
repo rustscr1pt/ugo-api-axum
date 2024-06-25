@@ -1,5 +1,8 @@
 use std::fmt::Debug;
+use std::sync::Arc;
+use mysql::PooledConn;
 use serde::{Deserialize, Serialize};
+use tokio::sync::{Mutex, RwLock};
 
 #[derive(Debug)]
 pub struct AdminsData { // Represents the admin which is added in the admins stack of mySQL
@@ -155,4 +158,15 @@ pub struct AddAdminRequest {
     pub login : String,
     pub password : String,
     pub token : String
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct StealthAuthToken {
+    pub token : String
+}
+
+#[derive(Debug, Clone)]
+pub struct AddAdminAccountExtensionBuilder {
+    pub db_pool : Arc<Mutex<PooledConn>>,
+    pub token_pool : Arc<RwLock<Vec<Token>>>
 }
