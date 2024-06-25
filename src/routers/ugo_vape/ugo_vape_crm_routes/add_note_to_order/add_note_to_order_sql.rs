@@ -2,15 +2,15 @@ use mysql::{Error, params, PooledConn};
 use mysql::prelude::Queryable;
 use tokio::sync::MutexGuard;
 use crate::generic_replies::generic_log_writer::generic_log_writer;
-use crate::structs::structs::{InsertStruct, NoteObjectNotation};
+use crate::structs::structs::{InsertStructIdNote, NoteObjectNotation};
 
 fn format_notes_parsing(id : u32) -> String {
     return format!("SELECT id, text_info, date_time FROM order_notes WHERE related_id = {}", id)
 }
 
 pub fn add_note_to_order_sql(unlocked : &mut MutexGuard<PooledConn>, id : u32, note : String) -> mysql::Result<Vec<NoteObjectNotation>, Error> {
-    let mut to_insert : Vec<InsertStruct> = Vec::with_capacity(1);
-    to_insert.push(InsertStruct {
+    let mut to_insert : Vec<InsertStructIdNote> = Vec::with_capacity(1);
+    to_insert.push(InsertStructIdNote {
         id,
         note : note.clone(),
     });

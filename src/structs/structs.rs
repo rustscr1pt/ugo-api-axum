@@ -99,5 +99,22 @@ pub struct AddNoteToOrder { // ugo_vape
 
 pub struct InsertStruct {
     pub id : u32,
+    pub note : String,
+    pub new_status: String,
+}
+
+pub struct InsertStructIdNote {
+    pub id : u32,
     pub note : String
+}
+
+pub struct InsertStructNewStatus {
+    pub id : u32,
+    pub new_status : String
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ChangeOrderStatusBody {
+    pub order_id : String,
+    pub new_status : String
 }
