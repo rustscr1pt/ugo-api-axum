@@ -2,10 +2,8 @@ use axum::{Extension, Json};
 use axum::response::IntoResponse;
 use crate::generic_replies::generic_log_writer::generic_log_writer;
 use crate::generic_replies::generic_replies::reply_with_message;
-use crate::routers::crm::login_actions_crm_routes::login_attempt_route::login_attempt_route_extension_builder::LoginAttemptExtension;
-use crate::routers::crm::login_actions_crm_routes::login_attempt_route::login_attempt_route_structs::LoginRequestData;
 use crate::structs::constants::SESSION_DURATION;
-use crate::structs::structs::Token;
+use crate::structs::structs::{LoginAttemptExtension, LoginRequestData, Token};
 use crate::structs::tool_functions::release_string_uuid;
 
 pub async fn login_attempt_route(main_actor : Extension<LoginAttemptExtension>, Json(body) : Json<LoginRequestData>) -> impl IntoResponse {
