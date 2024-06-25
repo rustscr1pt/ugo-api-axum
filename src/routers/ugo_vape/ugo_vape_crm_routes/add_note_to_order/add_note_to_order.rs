@@ -5,7 +5,7 @@ use mysql::PooledConn;
 use tokio::sync::Mutex;
 use crate::generic_replies::generic_replies::reply_with_serialized_struct;
 use crate::routers::ugo_vape::ugo_vape_crm_routes::add_note_to_order::add_note_to_order_sql::add_note_to_order_sql;
-use crate::routers::ugo_vape::ugo_vape_crm_routes::add_note_to_order::add_note_to_order_structs::AddNoteToOrder;
+use crate::structs::structs::AddNoteToOrder;
 use crate::structs::tool_functions::extract_u32;
 
 pub async fn add_note_to_order(pool : Extension<Arc<Mutex<PooledConn>>>, Json(body) : Json<AddNoteToOrder>) -> impl IntoResponse {

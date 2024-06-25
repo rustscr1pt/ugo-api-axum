@@ -2,8 +2,7 @@ use mysql::{Error, params, PooledConn};
 use mysql::prelude::Queryable;
 use tokio::sync::MutexGuard;
 use crate::generic_replies::generic_log_writer::generic_log_writer;
-use crate::routers::ugo_vape::ugo_vape_crm_routes::add_note_to_order::add_note_to_order_structs::InsertStruct;
-use crate::structs::structs::NoteObjectNotation;
+use crate::structs::structs::{InsertStruct, NoteObjectNotation};
 
 pub fn add_note_walgreen_sql(unlocked : &mut MutexGuard<PooledConn>, id : u32, note : String) -> mysql::Result<Vec<NoteObjectNotation>, Error> {
     let mut to_insert : Vec<InsertStruct> = Vec::with_capacity(1);

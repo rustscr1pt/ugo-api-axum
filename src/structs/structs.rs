@@ -90,3 +90,14 @@ pub struct GetPhoneAndName { // walgreen_web_routes => get_phone_and_name
     pub customer_phone_email : String,
     pub customer_comment : String
 }
+
+#[derive(Debug, Deserialize)]
+pub struct AddNoteToOrder { // ugo_vape
+    pub order_id : String,
+    pub note_to_add : String
+}
+
+pub struct InsertStruct {
+    pub id : u32,
+    pub note : String
+}
