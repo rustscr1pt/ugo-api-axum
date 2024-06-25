@@ -83,3 +83,10 @@ pub struct AdminAccountTemplate {
     pub user_password : String,
     pub created : String
 }
+
+#[derive(Debug, Deserialize)]
+pub struct GetPhoneAndName { // walgreen_web_routes => get_phone_and_name
+    pub customer_name : String,
+    pub customer_phone_email : String,
+    pub customer_comment : String
+}
