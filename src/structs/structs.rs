@@ -132,3 +132,8 @@ pub struct PageRequest {
     pub rows_per_page : String,
     pub page_number : String
 }
+
+#[derive(Debug, Deserialize)]
+pub struct RemoveObjectByID {
+    pub id : String
+}
