@@ -144,3 +144,15 @@ pub struct WriteDataBody { // A data which passed in by user from the site.
     pub name : String,
     pub about_customer : String
 }
+
+pub struct InsertToTable {
+    pub user_login: String,
+    pub user_password: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct AddAdminRequest {
+    pub login : String,
+    pub password : String,
+    pub token : String
+}
