@@ -118,3 +118,11 @@ pub struct ChangeOrderStatusBody {
     pub order_id : String,
     pub new_status : String
 }
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct PageRequestFiltered {
+    pub rows_per_page : String,
+    pub page_number : String,
+    pub filter_type : String,
+    pub filter_query : String
+}
