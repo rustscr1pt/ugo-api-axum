@@ -1,5 +1,5 @@
-use crate::routers::ugo_vape::ugo_vape_web_routes::write_route::write_route_structs::WriteDataBody;
 use crate::structs::enums::CheckFieldsCase;
+use crate::structs::structs::WriteDataBody;
 
 // Check fields before sending data to the server
 pub fn check_before_sending(body : &WriteDataBody) -> CheckFieldsCase {
