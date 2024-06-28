@@ -13,8 +13,7 @@ pub fn generic_log_writer<T : Display>(log : T, pool : &mut MutexGuard<PooledCon
                               .map(|value| params!
                               {
                                   "contents" => value.to_string()
-                              }
-                              )
+                              })
     ) {
         Ok(_) => {
             return Ok(())
