@@ -1,6 +1,7 @@
 pub const SESSION_DURATION : u16 = 900; // duration of session after login in seconds
 
 pub const DEPLOY_PORT : u16 = 8000; // local port to deploy an API
+pub const STANDARD_IP : &'static str = "0.0.0.0"; // standard IP for deploying
 
 // /Users/egorivanov/Desktop/mysql.txt - MacOS
 // C:\Users\User\Desktop\mysql.txt - Windows
