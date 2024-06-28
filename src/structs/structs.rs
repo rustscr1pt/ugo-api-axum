@@ -189,3 +189,10 @@ pub struct LoginRequestData { // A body which arrives when the login request is 
     pub login : String,
     pub password : String
 }
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct SingleLogObject {
+    pub id : u16,
+    pub contents : String,
+    pub date_time : String
+}
