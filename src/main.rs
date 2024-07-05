@@ -48,7 +48,7 @@ async fn main() {
         .merge(login_actions_crm(Arc::clone(&arc_sql), Arc::clone(&tokens_pool), Arc::clone(&arc_admins_pool)))
         .merge(logs_actions_crm(Arc::clone(&arc_sql)))
 
-        .fallback(reject_unmatched_connection)
+        .fallback(reject_unmatched_connection) // If no matches in merged => reject connection
         .layer(get_cors_layer()); // Set up allowed methods + allowed-origins
 
     let addr = tokio::net::TcpListener::bind(format!("{}:{}", STANDARD_IP,  DEPLOY_PORT)).await.unwrap();
