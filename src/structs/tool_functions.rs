@@ -4,6 +4,7 @@ use mysql::prelude::Queryable;
 use tokio::sync::{MutexGuard, RwLockReadGuard};
 use crate::structs::structs::{BasicPartGetAll, FormattedObject, NoteObjectNotation, Token};
 
+// Extract u32 from string
 pub fn extract_u32(value : String) -> Result<u32, ParseIntError> {
     match value.parse::<u32>() {
         Ok(value) => {return Ok(value)}
