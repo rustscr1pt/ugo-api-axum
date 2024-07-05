@@ -72,6 +72,7 @@ pub fn release_string_uuid() -> String { // Release a UUID string for placing in
     return String::from(uuid::Uuid::new_v4())
 }
 
+// check if required token is in the pool and return true / false
 pub fn token_check_before_action(readable_pool : RwLockReadGuard<Vec<Token>>, token : String) -> bool
 {
     if readable_pool.iter().any(|object| object.token == token) {
