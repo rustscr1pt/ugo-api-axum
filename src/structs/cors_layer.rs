@@ -36,7 +36,6 @@ pub fn get_cors_layer() -> CorsLayer {
     let allowed_origins = [
         "https://ugo-vape.ru".parse().unwrap(),
         "https://walgreenlogistics.ru".parse().unwrap(),
-        "http://iekgithubg.temp.swtest.ru".parse().unwrap(),
         "http://localhost:3000".parse().unwrap()
     ];
 
