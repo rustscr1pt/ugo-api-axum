@@ -8,6 +8,8 @@ fn format() -> String {
     return String::from("SELECT id, user_login, user_password FROM ugo_admin_accounts")
 }
 
+// Fill the admins logins & passwords from db at the first launch
+
 pub async fn fill_admins_sql(pool : Arc<Mutex<PooledConn>>, to_fill : Arc<RwLock<Vec<AdminsData>>>) -> () {
     let mut unlocked = pool.lock().await;
     let retrieved_admins =

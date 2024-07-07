@@ -2,11 +2,11 @@ use mysql::{Error, params, PooledConn};
 use mysql::prelude::Queryable;
 use tokio::sync::MutexGuard;
 use crate::generic_replies::generic_log_writer::generic_log_writer;
-use crate::routers::ugo_vape::ugo_vape_crm_routes::change_status_by_id::change_status_by_id_structs::InsertStruct;
+use crate::structs::structs::{InsertStructNewStatus};
 
 pub fn change_status_by_id_sql(unlocked : &mut MutexGuard<PooledConn>, id : u32, new_status : String) -> mysql::Result<(), Error> {
-    let mut to_insert : Vec<InsertStruct> = Vec::with_capacity(1);
-    to_insert.push(InsertStruct {
+    let mut to_insert : Vec<InsertStructNewStatus> = Vec::with_capacity(1);
+    to_insert.push(InsertStructNewStatus {
         id,
         new_status : new_status.clone(),
     });

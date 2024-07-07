@@ -3,6 +3,8 @@ use std::time::Duration;
 use tokio::sync::RwLock;
 use crate::structs::structs::Token;
 
+// Every 30 seconds reduce remaining time for active tokens. If token has <=0 seconds left => remove it from storage
+
 pub fn token_worker(pool : Arc<RwLock<Vec<Token>>>) -> () {
     tokio::spawn(async move {
         let mut countdown = 30;

@@ -5,7 +5,7 @@ use mysql::PooledConn;
 use tokio::sync::Mutex;
 use crate::generic_replies::generic_replies::reply_with_message;
 use crate::routers::ugo_vape::ugo_vape_crm_routes::remove_order_from_orders::remove_order_from_orders_sql::remove_order_from_orders_sql;
-use crate::routers::ugo_vape::ugo_vape_crm_routes::remove_order_from_orders::remove_order_from_orders_structs::RemoveObjectByID;
+use crate::structs::structs::RemoveObjectByID;
 use crate::structs::tool_functions::extract_u32;
 
 pub async fn remove_order_from_orders(pool : Extension<Arc<Mutex<PooledConn>>>, Json(body) : Json<RemoveObjectByID>) -> impl IntoResponse {

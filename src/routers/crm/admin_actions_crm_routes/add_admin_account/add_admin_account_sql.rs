@@ -2,7 +2,7 @@ use mysql::{Error, params, PooledConn};
 use mysql::prelude::Queryable;
 use tokio::sync::MutexGuard;
 use crate::generic_replies::generic_log_writer::generic_log_writer;
-use crate::routers::crm::admin_actions_crm_routes::add_admin_account::add_admin_account_structs::InsertToTable;
+use crate::structs::structs::InsertToTable;
 
 pub fn add_admins_account_sql(pool : &mut MutexGuard<PooledConn>, login : String, password : String) -> mysql::Result<(), Error> {
     let sample : [InsertToTable; 1] = [InsertToTable { user_login: login.clone(), user_password: password.clone() }];

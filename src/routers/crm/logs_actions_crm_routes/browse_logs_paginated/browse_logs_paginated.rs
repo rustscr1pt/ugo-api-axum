@@ -6,7 +6,7 @@ use tokio::sync::Mutex;
 use crate::generic_replies::generic_replies::reply_with_serialized_struct;
 use crate::routers::crm::logs_actions_crm_routes::browse_logs_paginated::browse_logs_paginated_sql::browse_logs_paginated_sql;
 use crate::routers::crm::logs_actions_crm_routes::browse_logs_paginated::total_rows_in_logs_sql::total_rows_in_logs_sql;
-use crate::routers::ugo_vape::ugo_vape_crm_routes::get_orders_by_page::get_orders_by_page_structs::PageRequest;
+use crate::structs::structs::PageRequest;
 use crate::structs::tool_functions::extract_u32;
 
 pub async fn browse_logs_paginated(pool : Extension<Arc<Mutex<PooledConn>>>, Json(body) : Json<PageRequest>) -> impl IntoResponse {

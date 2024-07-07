@@ -1,5 +1,8 @@
 use std::fmt::Debug;
+use std::sync::Arc;
+use mysql::PooledConn;
 use serde::{Deserialize, Serialize};
+use tokio::sync::{Mutex, RwLock};
 
 #[derive(Debug)]
 pub struct AdminsData { // Represents the admin which is added in the admins stack of mySQL
@@ -9,7 +12,7 @@ pub struct AdminsData { // Represents the admin which is added in the admins sta
 }
 
 #[derive(Debug, Clone)]
-pub struct Token {
+pub struct Token { // Represents one active login token in storage. With timing before disconnection
     pub token : String,
     pub time_remaining : u16
 }
@@ -68,7 +71,7 @@ pub struct EmptyStruct {
 }
 
 #[derive(Debug, Serialize)]
-pub struct ReplyWithStruct<T>
+pub struct ReplyWithStruct<T> // Represents a generic reply for request with data as answer.
     where T : Debug + Serialize
 {
     pub is_succeed : bool,
@@ -82,4 +85,114 @@ pub struct AdminAccountTemplate {
     pub user_login : String,
     pub user_password : String,
     pub created : String
+}
+
+#[derive(Debug, Deserialize)]
+pub struct GetPhoneAndName { // walgreen_web_routes => get_phone_and_name
+    pub customer_name : String,
+    pub customer_phone_email : String,
+    pub customer_comment : String
+}
+
+#[derive(Debug, Deserialize)]
+pub struct AddNoteToOrder { // ugo_vape
+    pub order_id : String,
+    pub note_to_add : String
+}
+
+pub struct InsertStruct {
+    pub id : u32,
+    pub note : String,
+    pub new_status: String,
+}
+
+pub struct InsertStructIdNote {
+    pub id : u32,
+    pub note : String
+}
+
+pub struct InsertStructNewStatus {
+    pub id : u32,
+    pub new_status : String
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ChangeOrderStatusBody {
+    pub order_id : String,
+    pub new_status : String
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct PageRequestFiltered {
+    pub rows_per_page : String,
+    pub page_number : String,
+    pub filter_type : String,
+    pub filter_query : String
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct PageRequest {
+    pub rows_per_page : String,
+    pub page_number : String
+}
+
+#[derive(Debug, Deserialize)]
+pub struct RemoveObjectByID {
+    pub id : String
+}
+
+#[derive(Debug, Deserialize)]
+pub struct WriteDataBody { // A data which passed in by user from the site.
+    pub email : String,
+    pub name : String,
+    pub about_customer : String
+}
+
+pub struct InsertToTable {
+    pub user_login: String,
+    pub user_password: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct AddAdminRequest {
+    pub login : String,
+    pub password : String,
+    pub token : String
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct StealthAuthToken {
+    pub token : String
+}
+
+#[derive(Debug, Clone)]
+pub struct AddAdminAccountExtensionBuilder {
+    pub db_pool : Arc<Mutex<PooledConn>>,
+    pub token_pool : Arc<RwLock<Vec<Token>>>
+}
+
+#[derive(Clone)]
+pub struct FetchAdminsDataExtension {
+    pub db_pool: Arc<Mutex<PooledConn>>,
+    pub token_pool : Arc<RwLock<Vec<Token>>>
+}
+
+#[derive(Clone, Debug)]
+pub struct LoginAttemptExtension {
+    pub db_pool : Arc<Mutex<PooledConn>>,
+    pub tokens_pool: Arc<RwLock<Vec<Token>>>,
+    pub admin_pool : Arc<RwLock<Vec<AdminsData>>>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct LoginRequestData { // A body which arrives when the login request is made.
+    pub login : String,
+    pub password : String
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct SingleLogObject {
+    pub id : u16,
+    pub contents : String,
+    pub date_time : String
 }

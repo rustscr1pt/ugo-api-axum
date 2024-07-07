@@ -15,5 +15,5 @@ uuid = {version = "1.7.0", features = ["v4"]}
 openssl = {version = "0.10.35", features = ["vendored"]}
 online = "4.0.2"
 futures = "0.3.30"
-mysql = "24.0.0"
+mysql = "25.0.1"
 tower-http = { version = "0.5.2", features = ["cors"] }

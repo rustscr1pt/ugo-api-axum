@@ -6,9 +6,8 @@ use tokio::sync::Mutex;
 use crate::generic_replies::generic_replies::reply_with_message;
 use crate::mysql::check_form_data::check_before_sending;
 use crate::routers::ugo_vape::ugo_vape_web_routes::write_route::write_route_sql::write_route_sql;
-use crate::routers::ugo_vape::ugo_vape_web_routes::write_route::write_route_structs::WriteDataBody;
 use crate::structs::enums::CheckFieldsCase;
-use crate::structs::structs::WriteToBaseNewCustomer;
+use crate::structs::structs::{WriteDataBody, WriteToBaseNewCustomer};
 
 pub async fn write_route(pool : Extension<Arc<Mutex<PooledConn>>>, Json(body) : Json<WriteDataBody>) -> impl IntoResponse {
     match check_before_sending(&body) {
