@@ -11,7 +11,7 @@ pub async fn get_phone_and_name(pool : Extension<Arc<Mutex<PooledConn>>>, Json(b
     let mut unlocked = pool.lock().await;
     match get_phone_and_name_sql(&mut unlocked, [body]) {
         Ok(_) => {
-            reply_with_message(true, "Ваш запрос был отправлен! Мы ответим вам как можно скорее.")
+            reply_with_message(true, "Ваш запрос был отправлен! Мы свяжемся с вами как можно скорее.")
         }
         Err(err) => {
             reply_with_message(false, err)

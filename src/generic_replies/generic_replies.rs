@@ -7,7 +7,7 @@ use crate::structs::structs::{Message, ReplyWithStruct};
 pub async fn reject_unmatched_connection() -> Json<Message> {
     return Json(Message {
         is_succeed: false,
-        message: "Unauthorized access, your connection is dropped".to_string(),
+        message: "Missing required header-s or JSON body, your connection is dropped".to_string(),
     })
 }
 
