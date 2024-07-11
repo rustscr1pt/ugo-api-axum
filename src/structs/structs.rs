@@ -100,12 +100,6 @@ pub struct AddNoteToOrder { // ugo_vape
     pub note_to_add : String
 }
 
-pub struct InsertStruct {
-    pub id : u32,
-    pub note : String,
-    pub new_status: String,
-}
-
 pub struct InsertStructIdNote {
     pub id : u32,
     pub note : String
