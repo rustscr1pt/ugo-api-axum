@@ -6,7 +6,7 @@ pub const STANDARD_IP : &'static str = "0.0.0.0"; // standard IP for deploying
 // /Users/egorivanov/Desktop/mysql.txt - MacOS
 // C:\Users\User\Desktop\mysql.txt - Windows
 // mysql.txt - Linux
-pub const FILE_LOCATION : &'static str = r#"/Users/egorivanov/Desktop/mysql.txt"#;
+pub const FILE_LOCATION : &'static str = r#"C:\Users\User\Desktop\mysql.txt"#;
 
 // https://ugo-vape.ru
 // http://localhost:8000

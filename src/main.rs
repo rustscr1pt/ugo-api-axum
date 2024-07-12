@@ -1,6 +1,9 @@
+use std::fmt::Display;
+use std::future::Future;
 use std::sync::Arc;
 use axum::{Router};
 use tokio::sync::{Mutex, RwLock};
+use crate::bind_and_serve::bindings::tokio_bindings;
 use crate::generic_replies::generic_replies::reject_unmatched_connection;
 use crate::mysql::admins_filler::async_admins_filler::admins_filler;
 use crate::mysql::admins_filler::fill_admins_sql::fill_admins_sql;
@@ -15,7 +18,6 @@ use crate::routers::ugo_vape::ugo_vape_web::ugo_vape_web;
 use crate::routers::walgreen::walgreen_crm::walgreen_crm;
 use crate::routers::walgreen::walgreen_web::walgreen_web;
 
-use crate::structs::constants::{DEPLOY_PORT, STANDARD_IP};
 use crate::structs::cors_layer::get_cors_layer;
 use crate::structs::structs::{AdminsData, Token};
 
@@ -24,9 +26,10 @@ mod structs;
 mod tests;
 mod routers;
 mod generic_replies;
+mod bind_and_serve;
 
 #[tokio::main]
-async fn main() {
+async fn main() -> () {
     let arc_sql = Arc::new(Mutex::new(establish_connection())); // create a shared instance of connection
     let arc_admins_pool : Arc<RwLock<Vec<AdminsData>>> = Arc::new(RwLock::new(Vec::new())); // Arc holding actual admins accounts for check
     let tokens_pool : Arc<RwLock<Vec<Token>>> = Arc::new(RwLock::new(Vec::new())); // Arc holding active tokens
@@ -51,7 +54,18 @@ async fn main() {
         .fallback(reject_unmatched_connection) // If no matches in merged => reject connection
         .layer(get_cors_layer()); // Set up allowed methods + allowed-origins
 
-    let addr = tokio::net::TcpListener::bind(format!("{}:{}", STANDARD_IP,  DEPLOY_PORT)).await.unwrap();
-    println!("Running on http://localhost:{}", DEPLOY_PORT);
-    axum::serve(addr, app).await.unwrap();
+    match tokio_bindings().await {
+        Ok(addr) => {
+            match axum::serve(addr, app).await {
+                Ok(()) => {}
+                Err(e) => {
+                    println!("Error when trying to serve.\n{}", e)
+                }
+            }
+        },
+        Err(e) => {
+            println!("Error when trying to bind.\n{}", e);
+            return;
+        }
+    }
 }
