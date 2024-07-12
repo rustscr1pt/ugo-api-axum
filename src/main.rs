@@ -59,7 +59,8 @@ async fn main() -> () {
             match axum::serve(addr, app).await {
                 Ok(()) => {}
                 Err(e) => {
-                    println!("Error when trying to serve.\n{}", e)
+                    println!("Error when trying to serve.\n{}", e);
+                    return;
                 }
             }
         },
