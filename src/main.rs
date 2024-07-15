@@ -65,7 +65,6 @@ async fn main() {
         },
         Err(e) => {
             println!("Error when trying to bind.\n{}", e);
-            return;
         }
     }
 }
