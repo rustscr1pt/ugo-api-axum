@@ -29,7 +29,7 @@ mod generic_replies;
 mod bind_and_serve;
 
 #[tokio::main]
-async fn main() -> () {
+async fn main() {
     let arc_sql = Arc::new(Mutex::new(establish_connection())); // create a shared instance of connection
     let arc_admins_pool : Arc<RwLock<Vec<AdminsData>>> = Arc::new(RwLock::new(Vec::new())); // Arc holding actual admins accounts for check
     let tokens_pool : Arc<RwLock<Vec<Token>>> = Arc::new(RwLock::new(Vec::new())); // Arc holding active tokens
