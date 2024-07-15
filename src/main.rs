@@ -60,7 +60,6 @@ async fn main() {
                 Ok(()) => {}
                 Err(e) => {
                     println!("Error when trying to serve.\n{}", e);
-                    return;
                 }
             }
         },
