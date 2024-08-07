@@ -27,6 +27,7 @@ mod tests;
 mod routers;
 mod generic_replies;
 mod bind_and_serve;
+mod wallgreen_bot_server;
 
 #[tokio::main]
 async fn main() {
