@@ -2,6 +2,7 @@ use std::fmt::Display;
 use std::future::Future;
 use std::sync::Arc;
 use axum::{Router};
+use rustelebot::types::BotInstance;
 use tokio::sync::{Mutex, RwLock};
 use crate::bind_and_serve::bindings::tokio_bindings;
 use crate::generic_replies::generic_replies::reject_unmatched_connection;
@@ -20,6 +21,7 @@ use crate::routers::walgreen::walgreen_web::walgreen_web;
 
 use crate::structs::cors_layer::get_cors_layer;
 use crate::structs::structs::{AdminsData, Token};
+use crate::wallgreen_bot_server::bot_initializer::bot_initializer;
 
 mod mysql;
 mod structs;
@@ -32,8 +34,9 @@ mod wallgreen_bot_server;
 #[tokio::main]
 async fn main() {
     let arc_sql = Arc::new(Mutex::new(establish_connection())); // create a shared instance of connection
-    let arc_admins_pool : Arc<RwLock<Vec<AdminsData>>> = Arc::new(RwLock::new(Vec::new())); // Arc holding actual admins accounts for check
-    let tokens_pool : Arc<RwLock<Vec<Token>>> = Arc::new(RwLock::new(Vec::new())); // Arc holding active tokens
+    let arc_admins_pool : Arc<RwLock<Vec<AdminsData>>> = Arc::new(RwLock::new(Vec::new())); // Arc is holding actual admins accounts for checks
+    let tokens_pool : Arc<RwLock<Vec<Token>>> = Arc::new(RwLock::new(Vec::new())); // Arc is holding active tokens
+    let telegram_bot : Arc<Mutex<BotInstance>> = Arc::new(Mutex::new(bot_initializer())); // Arc is holding an active instance of telegram bot for sending notifications
 
     fill_admins_sql(Arc::clone(&arc_sql), Arc::clone(&arc_admins_pool)).await; // fill admins at the boot of the server
 
@@ -42,10 +45,10 @@ async fn main() {
     token_worker(Arc::clone(&tokens_pool)); // spawn an active tokens cleaner
 
     let app = Router::new()
-        .merge(ugo_vape_web(Arc::clone(&arc_sql)))
+        .merge(ugo_vape_web(Arc::clone(&arc_sql), Arc::clone(&telegram_bot)))
         .merge(ugo_vape_crm(Arc::clone(&arc_sql)))
 
-        .merge(walgreen_web(Arc::clone(&arc_sql)))
+        .merge(walgreen_web(Arc::clone(&arc_sql), Arc::clone(&telegram_bot)))
         .merge(walgreen_crm(Arc::clone(&arc_sql)))
 
         .merge(admin_actions_crm(Arc::clone(&arc_sql), Arc::clone(&tokens_pool)))

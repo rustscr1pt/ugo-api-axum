@@ -171,13 +171,6 @@ pub struct FetchAdminsDataExtension {
     pub token_pool : Arc<RwLock<Vec<Token>>>
 }
 
-#[derive(Clone, Debug)]
-pub struct LoginAttemptExtension {
-    pub db_pool : Arc<Mutex<PooledConn>>,
-    pub tokens_pool: Arc<RwLock<Vec<Token>>>,
-    pub admin_pool : Arc<RwLock<Vec<AdminsData>>>
-}
-
 #[derive(Debug, Deserialize)]
 pub struct LoginRequestData { // A body which arrives when the login request is made.
     pub login : String,

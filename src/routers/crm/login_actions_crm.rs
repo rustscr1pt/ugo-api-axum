@@ -5,7 +5,8 @@ use mysql::PooledConn;
 use tokio::sync::{Mutex, RwLock};
 use crate::routers::crm::login_actions_crm_routes::login_attempt_route::login_attempt_route::login_attempt_route;
 use crate::routers::crm::login_actions_crm_routes::stealth_login_route::stealth_login::stealth_login;
-use crate::structs::structs::{AdminsData, LoginAttemptExtension, Token};
+use crate::structs::extension_structs::LoginAttemptExtension;
+use crate::structs::structs::{AdminsData, Token};
 
 // Defined routes are used for logging in (__admin-panel)
 

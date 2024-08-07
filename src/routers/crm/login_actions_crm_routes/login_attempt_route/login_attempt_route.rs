@@ -3,7 +3,8 @@ use axum::response::IntoResponse;
 use crate::generic_replies::generic_log_writer::generic_log_writer;
 use crate::generic_replies::generic_replies::reply_with_message;
 use crate::structs::constants::SESSION_DURATION;
-use crate::structs::structs::{LoginAttemptExtension, LoginRequestData, Token};
+use crate::structs::extension_structs::LoginAttemptExtension;
+use crate::structs::structs::{LoginRequestData, Token};
 use crate::structs::tool_functions::release_string_uuid;
 
 pub async fn login_attempt_route(main_actor : Extension<LoginAttemptExtension>, Json(body) : Json<LoginRequestData>) -> impl IntoResponse {
