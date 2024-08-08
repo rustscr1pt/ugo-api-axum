@@ -1,30 +1,17 @@
-use std::cmp::PartialEq;
+use std::fmt::Display;
 use std::sync::Arc;
 use mysql::PooledConn;
 use mysql::prelude::Queryable;
 use rustelebot::types::{BotInstance};
 use tokio::sync::{Mutex, MutexGuard};
 use crate::structs::structs::BasicPartGetAll;
+use crate::wallgreen_bot_server::bot_send_message_async::bot_send_message_async;
+use crate::wallgreen_bot_server::new_order_preset::base_selector_enum::BaseSelector;
 use crate::wallgreen_bot_server::new_order_preset::format_new_order_message::format_new_order_message;
-use crate::wallgreen_bot_server::new_order_preset::get_last_record_sql::BaseSelector::Wallgreen;
-#[derive(PartialEq)]
-pub enum BaseSelector {
-    Wallgreen,
-    Ugo
-}
-
-fn format_walgreen_sql(selector : &BaseSelector) -> String {
-    if selector == &Wallgreen {
-        return format!("SELECT id, request_status, customer_name, customer_email, customer_self_description, date_time_added FROM `walgreen_customers_request` WHERE id=(SELECT MAX(id) FROM `walgreen_customers_request`)")
-    }
-    else {
-        return format!("SELECT id, request_status, customer_name, customer_email, customer_self_description, date_time_added FROM `ugo_customers_request` WHERE id=(SELECT MAX(id) FROM `ugo_customers_request`)")
-    }
-}
-
+use crate::wallgreen_bot_server::new_order_preset::format_sql_query_walgreen_ugo::format_sql_query_walgreen_ugo;
 pub async fn get_last_record_sql(connection : &mut MutexGuard<'_, PooledConn>, base_type : BaseSelector, bot : Arc<Mutex<BotInstance>>) {
-    match connection.query_map(format_walgreen_sql(&base_type),
-                         |(id, request_status, customer_name, customer_email, customer_self_description, date_time_added)| {
+    match connection.query_map(format_sql_query_walgreen_ugo(&base_type),
+                               |(id, request_status, customer_name, customer_email, customer_self_description, date_time_added)| {
                              BasicPartGetAll {
                                  id,
                                  request_status,
@@ -42,10 +29,11 @@ pub async fn get_last_record_sql(connection : &mut MutexGuard<'_, PooledConn>, b
                 }
                 Some(object) => {
                     println!("{:?}", object);
-                    let mut unlocked_bot = bot.lock().await;
-                    match rustelebot::send_message_async(&*unlocked_bot, format_new_order_message(object, base_type).as_str(), None).await {
+                    match bot_send_message_async(Arc::clone(&bot), format_new_order_message(object, base_type)).await {
                         Ok(_) => {}
-                        Err(err) => {println!("Error when trying to write a message\n{}", err)}
+                        Err(err) => {
+                            println!("Error when trying to send a message : \n{}", err)
+                        }
                     }
                 }
             }

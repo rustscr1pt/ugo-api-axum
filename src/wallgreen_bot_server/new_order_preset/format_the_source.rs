@@ -1,4 +1,4 @@
-use crate::wallgreen_bot_server::new_order_preset::get_last_record_sql::BaseSelector;
+use crate::wallgreen_bot_server::new_order_preset::base_selector_enum::BaseSelector;
 
 pub fn format_the_source(source : BaseSelector) -> String {
     if source == BaseSelector::Ugo {

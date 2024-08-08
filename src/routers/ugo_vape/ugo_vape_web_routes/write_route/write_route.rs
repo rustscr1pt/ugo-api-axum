@@ -7,7 +7,8 @@ use crate::routers::ugo_vape::ugo_vape_web_routes::write_route::write_route_sql:
 use crate::structs::enums::CheckFieldsCase;
 use crate::structs::extension_structs::GetOrderTelegramWebExtension;
 use crate::structs::structs::{WriteDataBody, WriteToBaseNewCustomer};
-use crate::wallgreen_bot_server::new_order_preset::get_last_record_sql::{BaseSelector, get_last_record_sql};
+use crate::wallgreen_bot_server::new_order_preset::base_selector_enum::BaseSelector;
+use crate::wallgreen_bot_server::new_order_preset::get_last_record_sql::{get_last_record_sql};
 
 pub async fn write_route(main_actor : Extension<GetOrderTelegramWebExtension>, Json(body) : Json<WriteDataBody>) -> impl IntoResponse {
     let cloned_telegram_bot = Arc::clone(&main_actor.telegram_bot);
