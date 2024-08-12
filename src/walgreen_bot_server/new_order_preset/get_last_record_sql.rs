@@ -5,10 +5,10 @@ use mysql::prelude::Queryable;
 use rustelebot::types::{BotInstance};
 use tokio::sync::{Mutex, MutexGuard};
 use crate::structs::structs::BasicPartGetAll;
-use crate::wallgreen_bot_server::bot_send_message_async::bot_send_message_async;
-use crate::wallgreen_bot_server::new_order_preset::base_selector_enum::BaseSelector;
-use crate::wallgreen_bot_server::new_order_preset::format_new_order_message::format_new_order_message;
-use crate::wallgreen_bot_server::new_order_preset::format_sql_query_walgreen_ugo::format_sql_query_walgreen_ugo;
+use crate::walgreen_bot_server::bot_send_message_async::bot_send_message_async;
+use crate::walgreen_bot_server::new_order_preset::base_selector_enum::BaseSelector;
+use crate::walgreen_bot_server::new_order_preset::format_new_order_message::format_new_order_message;
+use crate::walgreen_bot_server::new_order_preset::format_sql_query_walgreen_ugo::format_sql_query_walgreen_ugo;
 pub async fn get_last_record_sql(connection : &mut MutexGuard<'_, PooledConn>, base_type : BaseSelector, bot : Arc<Mutex<BotInstance>>) {
     match connection.query_map(format_sql_query_walgreen_ugo(&base_type),
                                |(id, request_status, customer_name, customer_email, customer_self_description, date_time_added)| {

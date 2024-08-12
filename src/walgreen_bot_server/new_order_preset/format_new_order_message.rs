@@ -1,6 +1,6 @@
 use crate::structs::structs::BasicPartGetAll;
-use crate::wallgreen_bot_server::new_order_preset::base_selector_enum::BaseSelector;
-use crate::wallgreen_bot_server::new_order_preset::format_the_source::format_the_source;
+use crate::walgreen_bot_server::new_order_preset::base_selector_enum::BaseSelector;
+use crate::walgreen_bot_server::new_order_preset::format_the_source::format_the_source;
 
 pub fn format_new_order_message(object : &BasicPartGetAll, source : BaseSelector) -> String {
     return format!("Принята новая заявка с сайта : {}\n\nПорядковый номер : {}\nУстановлен статус : {}\n\nИмя заказчика : {}\nПочтовый адрес : {}\nОписание заявки : {}\n\nВремя добавления : {}\n\nБольше информации в панели по ссылке : https://ugo-vape.ru/__admin-panel/",

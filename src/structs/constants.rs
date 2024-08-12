@@ -17,3 +17,5 @@ pub const BOT_TOKEN_LOCATION : &'static str = r#"/Users/egorivanov/Desktop/bot_t
 // http://localhost:8000
 // http://localhost:3000
 // Replace cors route here! + check if there is a "/" at the end of URL, it shouldn't be there!
+
+pub const BOT_CHAT_ID : &'static str = "-1002156530519";

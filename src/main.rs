@@ -21,7 +21,7 @@ use crate::routers::walgreen::walgreen_web::walgreen_web;
 
 use crate::structs::cors_layer::get_cors_layer;
 use crate::structs::structs::{AdminsData, Token};
-use crate::wallgreen_bot_server::bot_initializer::bot_initializer;
+use crate::walgreen_bot_server::bot_initializer::bot_initializer;
 
 mod mysql;
 mod structs;
@@ -29,7 +29,7 @@ mod tests;
 mod routers;
 mod generic_replies;
 mod bind_and_serve;
-mod wallgreen_bot_server;
+mod walgreen_bot_server;
 
 #[tokio::main]
 async fn main() {
