@@ -46,10 +46,10 @@ async fn main() {
 
     let app = Router::new()
         .merge(ugo_vape_web(Arc::clone(&arc_sql), Arc::clone(&telegram_bot)))
-        .merge(ugo_vape_crm(Arc::clone(&arc_sql)))
+        .merge(ugo_vape_crm(Arc::clone(&arc_sql), Arc::clone(&telegram_bot)))
 
         .merge(walgreen_web(Arc::clone(&arc_sql), Arc::clone(&telegram_bot)))
-        .merge(walgreen_crm(Arc::clone(&arc_sql)))
+        .merge(walgreen_crm(Arc::clone(&arc_sql), Arc::clone(&telegram_bot)))
 
         .merge(admin_actions_crm(Arc::clone(&arc_sql), Arc::clone(&tokens_pool)))
         .merge(login_actions_crm(Arc::clone(&arc_sql), Arc::clone(&tokens_pool), Arc::clone(&arc_admins_pool)))

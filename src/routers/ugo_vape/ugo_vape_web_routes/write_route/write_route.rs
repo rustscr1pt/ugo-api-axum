@@ -5,12 +5,12 @@ use crate::generic_replies::generic_replies::reply_with_message;
 use crate::mysql::check_form_data::check_before_sending;
 use crate::routers::ugo_vape::ugo_vape_web_routes::write_route::write_route_sql::write_route_sql;
 use crate::structs::enums::CheckFieldsCase;
-use crate::structs::extension_structs::GetOrderTelegramWebExtension;
+use crate::structs::extension_structs::SQLAndTelegramWebExtension;
 use crate::structs::structs::{WriteDataBody, WriteToBaseNewCustomer};
 use crate::walgreen_bot_server::new_order_preset::base_selector_enum::BaseSelector;
 use crate::walgreen_bot_server::new_order_preset::get_last_record_sql::{get_last_record_sql};
 
-pub async fn write_route(main_actor : Extension<GetOrderTelegramWebExtension>, Json(body) : Json<WriteDataBody>) -> impl IntoResponse {
+pub async fn write_route(main_actor : Extension<SQLAndTelegramWebExtension>, Json(body) : Json<WriteDataBody>) -> impl IntoResponse {
     let cloned_telegram_bot = Arc::clone(&main_actor.telegram_bot);
     match check_before_sending(&body) {
         CheckFieldsCase::Ok => {

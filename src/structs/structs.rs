@@ -51,6 +51,14 @@ pub struct NoteObjectNotation {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
+pub struct NoteObjectNotationFull {
+    pub id : u32,
+    pub related_id : u32,
+    pub text_info : String,
+    pub date_time : String
+}
+
+#[derive(Debug, Deserialize, Serialize)]
 pub struct BasicPartGetAll { // Get first part without json on get all orders request
     pub id : u32,
     pub request_status : String,

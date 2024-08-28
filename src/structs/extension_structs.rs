@@ -5,7 +5,7 @@ use tokio::sync::{Mutex, RwLock};
 use crate::structs::structs::{AdminsData, Token};
 
 #[derive(Clone)]
-pub struct GetOrderTelegramWebExtension {
+pub struct SQLAndTelegramWebExtension {
     pub arc_sql : Arc<Mutex<PooledConn>>,
     pub telegram_bot : Arc<Mutex<BotInstance>>
 }
