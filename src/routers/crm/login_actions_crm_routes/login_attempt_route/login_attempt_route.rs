@@ -15,7 +15,7 @@ pub async fn login_attempt_route(main_actor : Extension<LoginAttemptExtension>, 
             let generated_token: String = release_string_uuid();
             unlocked.push(Token {
                 token: generated_token.clone(),
-                time_remaining: SESSION_DURATION,
+                time_remaining: SESSION_DURATION(),
             });
             let mut unlocked = main_actor.db_pool.lock().await;
             match generic_log_writer(format!("Попытка войти с данными : {} - {} => Успешно. Выдан токен : {}.", body.login, body.password, &generated_token), &mut unlocked) {

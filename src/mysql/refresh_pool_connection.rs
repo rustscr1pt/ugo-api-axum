@@ -13,7 +13,7 @@ pub fn refresh_pool_connection(to_refresh : Arc<Mutex<PooledConn>>) -> () {
         let mut timer : u8 = 60;
         loop {
             if timer == 0 {
-                let pool = Pool::new(fs::read_to_string(FILE_LOCATION).unwrap().trim()).expect("Couldn't connect to a base").get_conn().unwrap();
+                let pool = Pool::new(fs::read_to_string(FILE_LOCATION()).unwrap().trim()).expect("Couldn't connect to a base").get_conn().unwrap();
                 let mut unlocked = to_refresh.lock().await;
                 *unlocked = pool;
                 drop(unlocked);
